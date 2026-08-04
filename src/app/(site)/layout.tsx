@@ -4,7 +4,7 @@ import Header from "@/components/Header";
 import Footer from "@/components/Footer";
 import WhatsAppButton from "@/components/WhatsAppButton";
 import { site } from "@/lib/site";
-import "./globals.css";
+import "../globals.css";
 
 const cormorant = Cormorant_Garamond({
   variable: "--font-cormorant",

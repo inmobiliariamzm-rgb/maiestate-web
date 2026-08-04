@@ -1,21 +1,22 @@
 import type { Metadata } from "next";
 import { notFound } from "next/navigation";
 import Link from "next/link";
-import { getPropertyBySlug, properties } from "@/lib/data/properties";
+import { getPropertyBySlug, getPropertySlugs } from "@/lib/sanity/queries";
 import { formatPrice, operacionLabel, tipoLabel } from "@/lib/format";
-import PropertyImagePlaceholder from "@/components/PropertyImagePlaceholder";
+import PropertyImage from "@/components/PropertyImage";
 import ContactForm from "@/components/forms/ContactForm";
 import { site, buildWhatsAppLink } from "@/lib/site";
 
-export function generateStaticParams() {
-  return properties.map((p) => ({ slug: p.slug }));
+export async function generateStaticParams() {
+  const slugs = await getPropertySlugs();
+  return slugs.map((slug) => ({ slug }));
 }
 
 export async function generateMetadata({
   params,
 }: PageProps<"/propiedades/[slug]">): Promise<Metadata> {
   const { slug } = await params;
-  const property = getPropertyBySlug(slug);
+  const property = await getPropertyBySlug(slug);
   if (!property) return {};
 
   return {
@@ -28,7 +29,7 @@ export default async function PropertyDetailPage({
   params,
 }: PageProps<"/propiedades/[slug]">) {
   const { slug } = await params;
-  const property = getPropertyBySlug(slug);
+  const property = await getPropertyBySlug(slug);
   if (!property) notFound();
 
   const datosTecnicos: [string, string | number][] = [
@@ -90,19 +91,27 @@ export default async function PropertyDetailPage({
       </div>
 
       <div className="mt-8 grid gap-2 sm:grid-cols-4 sm:grid-rows-2">
-        <PropertyImagePlaceholder
-          seed={property.id}
-          label={tipoLabel(property.tipo)}
-          className="h-72 sm:col-span-2 sm:row-span-2 sm:h-full"
-        />
-        <PropertyImagePlaceholder seed={property.id + "b"} className="h-32 sm:h-full" />
-        <PropertyImagePlaceholder seed={property.id + "c"} className="h-32 sm:h-full" />
-        <PropertyImagePlaceholder seed={property.id + "d"} className="h-32 sm:h-full" />
-        <PropertyImagePlaceholder seed={property.id + "e"} className="h-32 sm:h-full" />
+        {["a", "b", "c", "d", "e"].map((suffix, i) => (
+          <PropertyImage
+            key={suffix}
+            image={property.imagenes?.[i]}
+            seed={property.id + suffix}
+            alt={property.titulo}
+            label={i === 0 ? tipoLabel(property.tipo) : undefined}
+            className={
+              i === 0
+                ? "h-72 sm:col-span-2 sm:row-span-2 sm:h-full"
+                : "h-32 sm:h-full"
+            }
+          />
+        ))}
       </div>
-      <p className="mt-2 text-xs text-navy/40">
-        Fotos de ejemplo — se reemplazarán por la galería real de la propiedad.
-      </p>
+      {(!property.imagenes || property.imagenes.length === 0) && (
+        <p className="mt-2 text-xs text-navy/40">
+          Fotos de ejemplo — se reemplazarán por la galería real cuando se
+          carguen en el panel de contenido (/studio).
+        </p>
+      )}
 
       <div className="mt-12 grid gap-12 lg:grid-cols-3">
         <div className="lg:col-span-2">

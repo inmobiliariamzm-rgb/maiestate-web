@@ -1,7 +1,7 @@
 import Link from "next/link";
 import type { Property } from "@/lib/data/properties";
 import { formatPrice, operacionLabel, tipoLabel } from "@/lib/format";
-import PropertyImagePlaceholder from "@/components/PropertyImagePlaceholder";
+import PropertyImage from "@/components/PropertyImage";
 
 export default function PropertyCard({ property }: { property: Property }) {
   return (
@@ -10,8 +10,10 @@ export default function PropertyCard({ property }: { property: Property }) {
       className="group flex flex-col overflow-hidden rounded-sm border border-navy/10 bg-white transition-shadow hover:shadow-lg"
     >
       <div className="relative">
-        <PropertyImagePlaceholder
+        <PropertyImage
+          image={property.imagenes?.[0]}
           seed={property.id}
+          alt={property.titulo}
           label={tipoLabel(property.tipo)}
           className="h-56 w-full"
         />

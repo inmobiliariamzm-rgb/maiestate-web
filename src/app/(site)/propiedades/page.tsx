@@ -2,7 +2,8 @@ import type { Metadata } from "next";
 import PropertySearchForm from "@/components/PropertySearchForm";
 import PropertyCard from "@/components/PropertyCard";
 import SectionHeading from "@/components/SectionHeading";
-import { filterProperties, type Operacion, type TipoPropiedad } from "@/lib/data/properties";
+import type { Operacion, TipoPropiedad } from "@/lib/data/properties";
+import { getProperties, getZonas } from "@/lib/sanity/queries";
 
 export const metadata: Metadata = {
   title: "Propiedades en venta y alquiler",
@@ -26,13 +27,16 @@ export default async function PropiedadesPage({
   const ambientes = get("ambientes");
   const precioMax = get("precioMax");
 
-  const results = filterProperties({
-    operacion: operacion ? (operacion as Operacion) : undefined,
-    tipo: tipo ? (tipo as TipoPropiedad) : undefined,
-    zona: zona || undefined,
-    ambientes: ambientes ? Number(ambientes) : undefined,
-    precioMax: precioMax ? Number(precioMax) : undefined,
-  });
+  const [results, zonas] = await Promise.all([
+    getProperties({
+      operacion: operacion ? (operacion as Operacion) : undefined,
+      tipo: tipo ? (tipo as TipoPropiedad) : undefined,
+      zona: zona || undefined,
+      ambientes: ambientes ? Number(ambientes) : undefined,
+      precioMax: precioMax ? Number(precioMax) : undefined,
+    }),
+    getZonas(),
+  ]);
 
   return (
     <div className="mx-auto max-w-6xl px-6 py-12">
@@ -46,6 +50,7 @@ export default async function PropiedadesPage({
         <PropertySearchForm
           variant="page"
           defaults={{ operacion, tipo, zona, ambientes, precioMax }}
+          zonas={zonas}
         />
       </div>
 

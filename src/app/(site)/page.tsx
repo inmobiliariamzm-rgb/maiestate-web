@@ -1,9 +1,10 @@
 import Link from "next/link";
+import Image from "next/image";
 import SectionHeading from "@/components/SectionHeading";
 import PropertySearchForm from "@/components/PropertySearchForm";
 import PropertyCard from "@/components/PropertyCard";
 import ServiceCard from "@/components/ServiceCard";
-import { properties } from "@/lib/data/properties";
+import { getFeaturedProperties, getZonas, getTestimonios } from "@/lib/sanity/queries";
 import { services } from "@/lib/data/services";
 import { site, buildWhatsAppLink } from "@/lib/site";
 
@@ -26,9 +27,13 @@ const PILARES = [
   },
 ];
 
-const destacadas = properties.filter((p) => p.destacada).slice(0, 6);
+export default async function HomePage() {
+  const [destacadas, zonas, testimonios] = await Promise.all([
+    getFeaturedProperties(),
+    getZonas(),
+    getTestimonios(),
+  ]);
 
-export default function HomePage() {
   return (
     <>
       <section className="relative overflow-hidden bg-navy text-cream">
@@ -58,7 +63,7 @@ export default function HomePage() {
           </p>
 
           <div className="mt-10">
-            <PropertySearchForm variant="hero" />
+            <PropertySearchForm variant="hero" zonas={zonas} />
           </div>
         </div>
       </section>
@@ -92,11 +97,17 @@ export default function HomePage() {
             </Link>
           </div>
 
-          <div className="mt-10 grid gap-6 sm:grid-cols-2 lg:grid-cols-3">
-            {destacadas.map((property) => (
-              <PropertyCard key={property.id} property={property} />
-            ))}
-          </div>
+          {destacadas.length > 0 ? (
+            <div className="mt-10 grid gap-6 sm:grid-cols-2 lg:grid-cols-3">
+              {destacadas.map((property) => (
+                <PropertyCard key={property.id} property={property} />
+              ))}
+            </div>
+          ) : (
+            <p className="mt-10 text-sm text-navy/50">
+              Todavía no hay propiedades destacadas cargadas.
+            </p>
+          )}
         </div>
       </section>
 
@@ -133,17 +144,45 @@ export default function HomePage() {
 
       <section className="mx-auto max-w-6xl px-6 py-16">
         <SectionHeading eyebrow="Testimonios" title="Lo que dicen nuestros clientes" align="center" />
-        <div className="mt-10 grid gap-6 sm:grid-cols-3">
-          {[1, 2, 3].map((i) => (
-            <div
-              key={i}
-              className="rounded-sm border border-dashed border-navy/20 bg-white p-6 text-center text-sm text-navy/50"
-            >
-              Testimonio a completar con contenido real provisto por el
-              cliente.
-            </div>
-          ))}
-        </div>
+        {testimonios.length > 0 ? (
+          <div className="mt-10 grid gap-6 sm:grid-cols-3">
+            {testimonios.map((t, i) => (
+              <div
+                key={i}
+                className="flex flex-col items-center gap-3 rounded-sm border border-navy/10 bg-white p-6 text-center"
+              >
+                {t.foto?.asset?.url ? (
+                  <Image
+                    src={`${t.foto.asset.url}?w=96&h=96&fit=crop&auto=format`}
+                    alt={t.nombre}
+                    width={56}
+                    height={56}
+                    className="rounded-full object-cover"
+                  />
+                ) : (
+                  <span className="flex h-14 w-14 items-center justify-center rounded-full bg-navy text-lg font-semibold text-gold">
+                    {t.nombre.charAt(0)}
+                  </span>
+                )}
+                <p className="text-sm text-navy/70">“{t.texto}”</p>
+                <p className="text-sm font-semibold text-navy">{t.nombre}</p>
+                {t.relacion && <p className="text-xs text-navy/50">{t.relacion}</p>}
+              </div>
+            ))}
+          </div>
+        ) : (
+          <div className="mt-10 grid gap-6 sm:grid-cols-3">
+            {[1, 2, 3].map((i) => (
+              <div
+                key={i}
+                className="rounded-sm border border-dashed border-navy/20 bg-white p-6 text-center text-sm text-navy/50"
+              >
+                Testimonio a completar — se cargan desde el panel de
+                contenido (/studio).
+              </div>
+            ))}
+          </div>
+        )}
       </section>
 
       <section className="bg-gold/10 py-16">

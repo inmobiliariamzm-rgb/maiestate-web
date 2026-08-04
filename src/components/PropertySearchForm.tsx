@@ -1,4 +1,4 @@
-import { TIPOS, ZONAS } from "@/lib/data/properties";
+import { TIPOS } from "@/lib/data/properties";
 
 export interface PropertySearchDefaults {
   operacion?: string;
@@ -15,9 +15,11 @@ const labelClass = "mb-1 block text-xs font-semibold uppercase tracking-wide tex
 export default function PropertySearchForm({
   defaults = {},
   variant = "hero",
+  zonas,
 }: {
   defaults?: PropertySearchDefaults;
   variant?: "hero" | "page";
+  zonas: string[];
 }) {
   return (
     <form
@@ -65,7 +67,7 @@ export default function PropertySearchForm({
         </label>
         <select id="zona" name="zona" defaultValue={defaults.zona ?? ""} className={selectClass}>
           <option value="">Todas las zonas</option>
-          {ZONAS.map((z) => (
+          {zonas.map((z) => (
             <option key={z} value={z}>
               {z}
             </option>

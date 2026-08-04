@@ -1,9 +1,9 @@
 import type { MetadataRoute } from "next";
-import { properties } from "@/lib/data/properties";
+import { getPropertySlugs } from "@/lib/sanity/queries";
 import { services } from "@/lib/data/services";
 import { site } from "@/lib/site";
 
-export default function sitemap(): MetadataRoute.Sitemap {
+export default async function sitemap(): Promise<MetadataRoute.Sitemap> {
   const staticRoutes: MetadataRoute.Sitemap = [
     { url: site.url, changeFrequency: "weekly", priority: 1 },
     { url: `${site.url}/nosotros`, changeFrequency: "monthly", priority: 0.6 },
@@ -19,8 +19,9 @@ export default function sitemap(): MetadataRoute.Sitemap {
     priority: 0.7,
   }));
 
-  const propertyRoutes: MetadataRoute.Sitemap = properties.map((p) => ({
-    url: `${site.url}/propiedades/${p.slug}`,
+  const propertySlugs = await getPropertySlugs();
+  const propertyRoutes: MetadataRoute.Sitemap = propertySlugs.map((slug) => ({
+    url: `${site.url}/propiedades/${slug}`,
     changeFrequency: "weekly",
     priority: 0.8,
   }));
