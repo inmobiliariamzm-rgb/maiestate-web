@@ -1,0 +1,100 @@
+"use server";
+
+import { contactSchema, tasacionSchema, captacionSchema } from "@/lib/validation";
+import { sendNotification } from "@/lib/mailer";
+import type { FormState } from "@/lib/formState";
+
+export async function submitContactForm(
+  _prevState: FormState,
+  formData: FormData
+): Promise<FormState> {
+  const parsed = contactSchema.safeParse({
+    nombre: formData.get("nombre"),
+    telefono: formData.get("telefono"),
+    email: formData.get("email"),
+    mensaje: formData.get("mensaje"),
+    propiedad: formData.get("propiedad") ?? "",
+  });
+
+  if (!parsed.success) {
+    return {
+      success: false,
+      message: "Revisá los datos del formulario.",
+      errors: parsed.error.flatten().fieldErrors as Record<string, string[]>,
+    };
+  }
+
+  await sendNotification({
+    subject: `Consulta de contacto — ${parsed.data.nombre}`,
+    data: parsed.data as unknown as Record<string, string>,
+  });
+
+  return {
+    success: true,
+    message: "¡Gracias! Recibimos tu consulta y te vamos a contactar a la brevedad.",
+  };
+}
+
+export async function submitTasacionForm(
+  _prevState: FormState,
+  formData: FormData
+): Promise<FormState> {
+  const parsed = tasacionSchema.safeParse({
+    nombre: formData.get("nombre"),
+    telefono: formData.get("telefono"),
+    email: formData.get("email"),
+    direccion: formData.get("direccion"),
+    tipoPropiedad: formData.get("tipoPropiedad"),
+    comentarios: formData.get("comentarios"),
+  });
+
+  if (!parsed.success) {
+    return {
+      success: false,
+      message: "Revisá los datos del formulario.",
+      errors: parsed.error.flatten().fieldErrors as Record<string, string[]>,
+    };
+  }
+
+  await sendNotification({
+    subject: `Solicitud de tasación — ${parsed.data.direccion}`,
+    data: parsed.data as unknown as Record<string, string>,
+  });
+
+  return {
+    success: true,
+    message: "¡Gracias! Recibimos tu solicitud de tasación y te contactaremos para coordinar la visita.",
+  };
+}
+
+export async function submitCaptacionForm(
+  _prevState: FormState,
+  formData: FormData
+): Promise<FormState> {
+  const parsed = captacionSchema.safeParse({
+    nombre: formData.get("nombre"),
+    telefono: formData.get("telefono"),
+    email: formData.get("email"),
+    direccion: formData.get("direccion"),
+    operacion: formData.get("operacion"),
+    comentarios: formData.get("comentarios"),
+  });
+
+  if (!parsed.success) {
+    return {
+      success: false,
+      message: "Revisá los datos del formulario.",
+      errors: parsed.error.flatten().fieldErrors as Record<string, string[]>,
+    };
+  }
+
+  await sendNotification({
+    subject: `Nueva captación — ${parsed.data.direccion}`,
+    data: parsed.data as unknown as Record<string, string>,
+  });
+
+  return {
+    success: true,
+    message: "¡Gracias! Recibimos los datos de tu propiedad, un asesor se va a contactar para coordinar la visita.",
+  };
+}
