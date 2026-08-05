@@ -24,6 +24,9 @@ export const tasacionSchema = z.object({
   direccion: z.string().trim().min(5, "Ingresá la dirección de la propiedad."),
   tipoPropiedad: z.string().trim().min(1, "Seleccioná el tipo de propiedad."),
   comentarios: z.string().trim().optional(),
+  // De dónde vino el prospecto (ej. "instagram", "google-ads") cuando el
+  // formulario se completa desde la landing de captación (/tasacion).
+  origen: z.string().trim().optional(),
 });
 
 export const captacionSchema = z.object({

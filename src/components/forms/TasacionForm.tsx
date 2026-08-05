@@ -10,11 +10,13 @@ const inputClass =
   "w-full rounded-sm border border-navy/15 bg-white px-3 py-2.5 text-sm text-navy focus:border-gold focus:outline-none";
 const labelClass = "mb-1 block text-xs font-semibold uppercase tracking-wide text-navy/60";
 
-export default function TasacionForm() {
+export default function TasacionForm({ origen }: { origen?: string }) {
   const [state, formAction] = useActionState(submitTasacionForm, initialFormState);
 
   return (
     <form action={formAction} className="flex flex-col gap-4">
+      {origen && <input type="hidden" name="origen" value={origen} />}
+
       <div>
         <label className={labelClass} htmlFor="t-nombre">
           Nombre y apellido
