@@ -15,6 +15,7 @@ export const contactSchema = z.object({
   email,
   mensaje: z.string().trim().min(10, "Contanos un poco más (mínimo 10 caracteres)."),
   propiedad: z.string().optional(),
+  origen: z.string().trim().optional(),
 });
 
 export const tasacionSchema = z.object({
@@ -36,6 +37,7 @@ export const captacionSchema = z.object({
   direccion: z.string().trim().min(5, "Ingresá la dirección de la propiedad."),
   operacion: z.string().trim().min(1, "Indicá si querés vender o alquilar."),
   comentarios: z.string().trim().optional(),
+  origen: z.string().trim().optional(),
 });
 
 export type ContactFormValues = z.infer<typeof contactSchema>;

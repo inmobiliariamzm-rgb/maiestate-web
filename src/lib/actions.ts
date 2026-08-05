@@ -2,6 +2,7 @@
 
 import { contactSchema, tasacionSchema, captacionSchema } from "@/lib/validation";
 import { sendNotification } from "@/lib/mailer";
+import { saveLead } from "@/lib/leads";
 import type { FormState } from "@/lib/formState";
 
 export async function submitContactForm(
@@ -14,6 +15,7 @@ export async function submitContactForm(
     email: formData.get("email"),
     mensaje: formData.get("mensaje"),
     propiedad: formData.get("propiedad") ?? "",
+    origen: formData.get("origen") ?? "",
   });
 
   if (!parsed.success) {
@@ -27,6 +29,17 @@ export async function submitContactForm(
   await sendNotification({
     subject: `Consulta de contacto — ${parsed.data.nombre}`,
     data: parsed.data as unknown as Record<string, string>,
+  });
+
+  await saveLead({
+    tipo: "contacto",
+    nombre: parsed.data.nombre,
+    telefono: parsed.data.telefono,
+    email: parsed.data.email,
+    mensaje: parsed.data.propiedad
+      ? `[Propiedad: ${parsed.data.propiedad}] ${parsed.data.mensaje}`
+      : parsed.data.mensaje,
+    origen: parsed.data.origen,
   });
 
   return {
@@ -62,6 +75,17 @@ export async function submitTasacionForm(
     data: parsed.data as unknown as Record<string, string>,
   });
 
+  await saveLead({
+    tipo: "tasacion",
+    nombre: parsed.data.nombre,
+    telefono: parsed.data.telefono,
+    email: parsed.data.email,
+    direccion: parsed.data.direccion,
+    tipoPropiedad: parsed.data.tipoPropiedad,
+    mensaje: parsed.data.comentarios,
+    origen: parsed.data.origen,
+  });
+
   return {
     success: true,
     message: "¡Gracias! Recibimos tu solicitud de tasación y te contactaremos para coordinar la visita.",
@@ -79,6 +103,7 @@ export async function submitCaptacionForm(
     direccion: formData.get("direccion"),
     operacion: formData.get("operacion"),
     comentarios: formData.get("comentarios"),
+    origen: formData.get("origen") ?? "",
   });
 
   if (!parsed.success) {
@@ -92,6 +117,17 @@ export async function submitCaptacionForm(
   await sendNotification({
     subject: `Nueva captación — ${parsed.data.direccion}`,
     data: parsed.data as unknown as Record<string, string>,
+  });
+
+  await saveLead({
+    tipo: "captacion",
+    nombre: parsed.data.nombre,
+    telefono: parsed.data.telefono,
+    email: parsed.data.email,
+    direccion: parsed.data.direccion,
+    operacion: parsed.data.operacion,
+    mensaje: parsed.data.comentarios,
+    origen: parsed.data.origen,
   });
 
   return {
