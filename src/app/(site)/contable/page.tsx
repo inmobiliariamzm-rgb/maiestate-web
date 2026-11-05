@@ -2,12 +2,11 @@ import type { Metadata } from "next";
 import { pageMetadata } from "@/lib/seo";
 import SectionHeading from "@/components/SectionHeading";
 import ServiceIcon from "@/components/ServiceIcon";
-import Placeholder from "@/components/Placeholder";
 import PageHero, { heroPrimaryButton } from "@/components/page/PageHero";
 import TwoColumns from "@/components/page/TwoColumns";
 import FaqList from "@/components/page/FaqList";
 import ClosingCta from "@/components/page/ClosingCta";
-import { site, buildWhatsAppLink, WHATSAPP_CONTABLE_MESSAGE } from "@/lib/site";
+import { contador, buildWhatsAppLink, WHATSAPP_CONTABLE_MESSAGE } from "@/lib/site";
 import type { IconName } from "@/lib/data/services";
 
 export const metadata: Metadata = pageMetadata({
@@ -35,15 +34,9 @@ const FAQS = [
   },
   {
     pregunta: "¿Quién firma los trámites contables?",
-    respuesta: (
-      <>
-        El contador a cargo del departamento, con su matrícula profesional:{" "}
-        <Placeholder>
-          {site.contador.nombre} — {site.contador.matricula}
-        </Placeholder>
-        .
-      </>
-    ),
+    respuesta: contador
+      ? `El contador a cargo del departamento, con su matrícula profesional: ${contador.nombre} — ${contador.matricula}.`
+      : "El contador a cargo del departamento, con su matrícula profesional.",
   },
   {
     pregunta: "¿Qué pasa con mis datos?",

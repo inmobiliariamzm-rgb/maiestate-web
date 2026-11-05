@@ -1,5 +1,5 @@
 import type { Metadata } from "next";
-import { site } from "@/lib/site";
+import { site, contador } from "@/lib/site";
 
 // Metadatos y Open Graph compartidos por los dos root layouts
 // ((site) y (landing)). El lema vive en site.tagline.
@@ -44,7 +44,8 @@ const postalAddress = {
 };
 
 // Datos estructurados: RealEstateAgent + AccountingService como
-// `department`. El contador a cargo queda [completar].
+// `department`. El contador a cargo se agrega solo si está cargado en
+// `contador` (src/lib/site.ts).
 export const organizationJsonLd = {
   "@context": "https://schema.org",
   "@type": "RealEstateAgent",
@@ -71,11 +72,15 @@ export const organizationJsonLd = {
     email: site.contact.email,
     telephone: `+${site.contact.whatsappNumber}`,
     address: postalAddress,
-    employee: {
-      "@type": "Person",
-      name: site.contador.nombre,
-      jobTitle: `Contador a cargo (${site.contador.matricula})`,
-    },
+    ...(contador
+      ? {
+          employee: {
+            "@type": "Person",
+            name: contador.nombre,
+            jobTitle: `Contador a cargo (${contador.matricula})`,
+          },
+        }
+      : {}),
   },
 };
 

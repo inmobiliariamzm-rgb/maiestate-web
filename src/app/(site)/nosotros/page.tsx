@@ -2,13 +2,12 @@ import type { Metadata } from "next";
 import Link from "next/link";
 import SectionHeading from "@/components/SectionHeading";
 import ServiceIcon from "@/components/ServiceIcon";
-import Placeholder from "@/components/Placeholder";
-import { site } from "@/lib/site";
+import { site, contador } from "@/lib/site";
 
 export const metadata: Metadata = {
   title: "Nosotros",
   description:
-    "Conocé a MAIESTATE, inmobiliaria y Departamento Contable en Maipú, Mendoza: R. Alejandro Maidana, Corredor Público Inmobiliario (CCPIM Mat. 1378), y el contador a cargo del departamento.",
+    "Conocé a MAIESTATE, inmobiliaria y Departamento Contable en Maipú, Mendoza: R. Alejandro Maidana, Corredor Público Inmobiliario (CCPIM Mat. 1378).",
 };
 
 const VALORES = [
@@ -81,33 +80,29 @@ export default function NosotrosPage() {
           compraventas, con un solo referente para vos.
         </p>
 
-        <div className="mt-6 flex flex-col gap-6 rounded-sm border border-navy/10 bg-white p-8 sm:flex-row sm:items-center">
-          {/* Sin foto propia todavía: fondo navy con ícono dorado. */}
-          <span
-            className="flex h-28 w-28 shrink-0 items-center justify-center rounded-full bg-navy text-gold"
-            aria-label="Foto del contador pendiente"
-            role="img"
-          >
-            <ServiceIcon icon="contabilidad" className="h-12 w-12" />
-          </span>
-          <div>
-            <h3 className="font-serif text-2xl font-semibold text-navy">
-              <Placeholder>{site.contador.nombre}</Placeholder>
-            </h3>
-            <p className="mt-1 text-sm font-semibold uppercase tracking-wide text-gold">
-              Contador a cargo · <Placeholder>{site.contador.matricula}</Placeholder>
-            </p>
-            <p className="mt-3 text-navy/70">
-              <Placeholder>[completar foto propia y breve presentación del contador]</Placeholder>
-            </p>
-            <Link
-              href="/contable"
-              className="mt-3 inline-block text-sm font-semibold text-gold hover:text-navy"
+        {contador ? (
+          <div className="mt-6 flex flex-col gap-6 rounded-sm border border-navy/10 bg-white p-8 sm:flex-row sm:items-center">
+            {/* Sin foto propia: fondo navy con ícono dorado. */}
+            <span
+              className="flex h-28 w-28 shrink-0 items-center justify-center rounded-full bg-navy text-gold"
+              aria-hidden="true"
             >
-              Conocé el Departamento Contable →
-            </Link>
+              <ServiceIcon icon="contabilidad" className="h-12 w-12" />
+            </span>
+            <div>
+              <h3 className="font-serif text-2xl font-semibold text-navy">{contador.nombre}</h3>
+              <p className="mt-1 text-sm font-semibold uppercase tracking-wide text-gold">
+                Contador a cargo · {contador.matricula}
+              </p>
+            </div>
           </div>
-        </div>
+        ) : null}
+        <Link
+          href="/contable"
+          className="mt-4 inline-block text-sm font-semibold text-gold hover:text-navy"
+        >
+          Conocé el Departamento Contable →
+        </Link>
       </div>
 
       <div className="mt-12">

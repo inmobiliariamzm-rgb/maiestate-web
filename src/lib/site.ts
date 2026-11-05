@@ -22,18 +22,20 @@ export const site = {
     titulo: "Corredor Público Inmobiliario",
     matricula: "CCPIM Mat. 1378",
   },
-  // Contador a cargo del Departamento Contable.
-  // [completar] — pendiente de confirmación del cliente. No publicar a
-  // producción con estos placeholders.
-  contador: {
-    nombre: "[completar nombre del contador]",
-    matricula: "[completar matrícula]",
-  },
   social: {
     instagramHandle: "@maiestate.mendoza",
     instagram: "https://instagram.com/maiestate.mendoza",
   },
 } as const;
+
+/**
+ * Contador a cargo del Departamento Contable.
+ * Por ahora no se publica (decisión del cliente): con `null` el sitio no
+ * muestra nombre, matrícula ni foto, y el schema AccountingService sale sin
+ * `employee`. Para mostrarlo, reemplazar por:
+ *   { nombre: "Nombre Apellido", matricula: "Mat. XXXX", foto?: "/ruta.jpg" }
+ */
+export const contador: { nombre: string; matricula: string } | null = null;
 
 export function buildWhatsAppLink(message: string) {
   const encoded = encodeURIComponent(message);
