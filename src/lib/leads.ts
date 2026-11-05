@@ -1,7 +1,12 @@
 import { writeClient } from "@/lib/sanity/writeClient";
+import type { Area } from "@/lib/data/services";
 
 export interface LeadPayload {
-  tipo: "contacto" | "tasacion" | "captacion";
+  tipo: "contacto" | "tasacion" | "captacion" | "consorcio";
+  /** Etiqueta de área del brief v2: Inmobiliario | Contable | Conjunto. */
+  area?: Area;
+  /** Opción elegida en "¿En qué te podemos ayudar?". */
+  motivo?: string;
   nombre: string;
   telefono: string;
   email?: string;

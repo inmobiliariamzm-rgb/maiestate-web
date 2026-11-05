@@ -1,29 +1,37 @@
 export const site = {
   name: "MAIESTATE",
   legalName: "MAIESTATE Inmobiliaria",
-  tagline: "Tu legado, nuestra prioridad",
+  tagline: "Tu patrimonio, nuestra prioridad",
   url: "https://www.maiestate.com.ar",
+  description:
+    "Inmobiliaria y Departamento Contable en Maipú, Mendoza: tasaciones, compraventa, alquileres, consorcios, fondos de comercio, inversiones, sucesiones, impuestos y contabilidad.",
   address: {
-    street: "Sarmiento 630",
+    street: "Ozamis Sur y 25 de Mayo",
     city: "Maipú",
     province: "Mendoza",
     country: "Argentina",
-    full: "Sarmiento 630, Maipú, Mendoza, Argentina",
+    full: "Ozamis Sur y 25 de Mayo, Maipú, Mendoza",
   },
   contact: {
-    // Email real provisto por el cliente.
-    email: "inmobiliariamzm@gmail.com",
-    // Placeholder: reemplazar por el número real de WhatsApp/teléfono de MAIESTATE.
-    phoneDisplay: "+54 9 261 XXX-XXXX",
-    whatsappNumber: "5492610000000",
+    email: "maiestate.mza@gmail.com",
+    phoneDisplay: "261 569-2038",
+    whatsappNumber: "5492615692038",
   },
   responsableTecnico: {
-    nombre: "Raúl Alejandro Maidana",
+    nombre: "R. Alejandro Maidana",
+    titulo: "Corredor Público Inmobiliario",
     matricula: "CCPIM Mat. 1378",
   },
+  // Contador a cargo del Departamento Contable.
+  // [completar] — pendiente de confirmación del cliente. No publicar a
+  // producción con estos placeholders.
+  contador: {
+    nombre: "[completar nombre del contador]",
+    matricula: "[completar matrícula]",
+  },
   social: {
-    instagram: "https://instagram.com/maiestate",
-    facebook: "https://facebook.com/maiestate",
+    instagramHandle: "@maiestate.mendoza",
+    instagram: "https://instagram.com/maiestate.mendoza",
   },
 } as const;
 
@@ -34,3 +42,6 @@ export function buildWhatsAppLink(message: string) {
 
 export const WHATSAPP_DEFAULT_MESSAGE =
   "Hola MAIESTATE, quisiera más información.";
+
+export const WHATSAPP_CONTABLE_MESSAGE =
+  "Hola, quiero hacer una consulta al Departamento Contable";

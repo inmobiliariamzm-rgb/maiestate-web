@@ -14,6 +14,7 @@ export default defineType({
           { title: "Contacto", value: "contacto" },
           { title: "Tasación", value: "tasacion" },
           { title: "Captación", value: "captacion" },
+          { title: "Propuesta de consorcio", value: "consorcio" },
         ],
       },
       validation: (Rule) => Rule.required(),
@@ -31,6 +32,23 @@ export default defineType({
         layout: "radio",
       },
       initialValue: "nuevo",
+    }),
+    defineField({
+      name: "area",
+      title: "Área",
+      type: "string",
+      options: {
+        list: [
+          { title: "Inmobiliario", value: "Inmobiliario" },
+          { title: "Contable", value: "Contable" },
+          { title: "Conjunto", value: "Conjunto" },
+        ],
+      },
+    }),
+    defineField({
+      name: "motivo",
+      title: "¿En qué te podemos ayudar?",
+      type: "string",
     }),
     defineField({ name: "nombre", title: "Nombre y apellido", type: "string" }),
     defineField({ name: "telefono", title: "Teléfono", type: "string" }),
@@ -74,11 +92,11 @@ export default defineType({
     },
   ],
   preview: {
-    select: { title: "nombre", subtitle: "tipo", estado: "estado" },
-    prepare({ title, subtitle, estado }) {
+    select: { title: "nombre", subtitle: "tipo", estado: "estado", area: "area" },
+    prepare({ title, subtitle, estado, area }) {
       return {
         title: title || "(sin nombre)",
-        subtitle: `${subtitle}${estado ? ` · ${estado}` : ""}`,
+        subtitle: `${area ? `[${area}] ` : ""}${subtitle}${estado ? ` · ${estado}` : ""}`,
       };
     },
   },

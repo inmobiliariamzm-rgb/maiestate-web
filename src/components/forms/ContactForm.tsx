@@ -4,6 +4,8 @@ import { useActionState } from "react";
 import { submitContactForm } from "@/lib/actions";
 import { initialFormState } from "@/lib/formState";
 import FormSubmitButton from "@/components/forms/FormSubmitButton";
+import OrigenInput from "@/components/forms/OrigenInput";
+import { MOTIVOS, type MotivoValue } from "@/lib/data/services";
 
 const inputClass =
   "w-full rounded-sm border border-navy/15 bg-white px-3 py-2.5 text-sm text-navy focus:border-gold focus:outline-none";
@@ -12,9 +14,14 @@ const labelClass = "mb-1 block text-xs font-semibold uppercase tracking-wide tex
 export default function ContactForm({
   propiedad,
   title = "Escribinos",
+  motivo,
+  origen,
 }: {
   propiedad?: string;
   title?: string;
+  /** Opción preseleccionada en "¿En qué te podemos ayudar?". */
+  motivo?: MotivoValue;
+  origen?: string;
 }) {
   const [state, formAction] = useActionState(submitContactForm, initialFormState);
 
@@ -23,6 +30,32 @@ export default function ContactForm({
       <h3 className="font-serif text-xl font-semibold text-navy">{title}</h3>
 
       {propiedad && <input type="hidden" name="propiedad" value={propiedad} />}
+      <OrigenInput value={origen} />
+
+      <div>
+        <label className={labelClass} htmlFor="motivo">
+          ¿En qué te podemos ayudar?
+        </label>
+        <select
+          id="motivo"
+          name="motivo"
+          required
+          defaultValue={motivo ?? (propiedad ? "compraventa" : "")}
+          className={inputClass}
+        >
+          <option value="" disabled>
+            Seleccioná una opción
+          </option>
+          {MOTIVOS.map((m) => (
+            <option key={m.value} value={m.value}>
+              {m.label}
+            </option>
+          ))}
+        </select>
+        {state.errors?.motivo && (
+          <p className="mt-1 text-xs text-red-600">{state.errors.motivo[0]}</p>
+        )}
+      </div>
 
       <div>
         <label className={labelClass} htmlFor="nombre">

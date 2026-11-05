@@ -1,11 +1,14 @@
 import type { Metadata } from "next";
+import Link from "next/link";
 import SectionHeading from "@/components/SectionHeading";
+import ServiceIcon from "@/components/ServiceIcon";
+import Placeholder from "@/components/Placeholder";
 import { site } from "@/lib/site";
 
 export const metadata: Metadata = {
   title: "Nosotros",
   description:
-    "Conocé la historia de MAIESTATE, inmobiliaria boutique en Maipú, Mendoza, y a Raúl Alejandro Maidana, Corredor Público Inmobiliario matriculado.",
+    "Conocé a MAIESTATE, inmobiliaria y Departamento Contable en Maipú, Mendoza: R. Alejandro Maidana, Corredor Público Inmobiliario (CCPIM Mat. 1378), y el contador a cargo del departamento.",
 };
 
 const VALORES = [
@@ -59,11 +62,52 @@ export default function NosotrosPage() {
           {site.responsableTecnico.matricula}
         </p>
         <p className="mt-4 text-navy/70">
-          Corredor Público Inmobiliario responsable técnico de MAIESTATE,
+          Corredor Público Inmobiliario responsable de MAIESTATE,
           matriculado ante el CCPIM (Colegio de Corredores Públicos
           Inmobiliarios de Mendoza). [Contenido a completar: trayectoria
-          profesional, formación y especialización de Raúl Maidana.]
+          profesional, formación y especialización de R. Alejandro Maidana.]
         </p>
+      </div>
+
+      <div className="mt-12">
+        <p className="mb-2 text-xs font-semibold uppercase tracking-[0.25em] text-gold">
+          MAIESTATE · Departamento Contable
+        </p>
+        <h2 className="font-serif text-2xl font-semibold text-navy">Departamento Contable</h2>
+        <p className="mt-3 text-navy/80">
+          Nuestro Departamento Contable atiende impuestos, contabilidad y
+          sueldos, y trabaja junto al área inmobiliaria en alquileres,
+          consorcios, fondos de comercio, sucesiones, inversiones y
+          compraventas, con un solo referente para vos.
+        </p>
+
+        <div className="mt-6 flex flex-col gap-6 rounded-sm border border-navy/10 bg-white p-8 sm:flex-row sm:items-center">
+          {/* Sin foto propia todavía: fondo navy con ícono dorado. */}
+          <span
+            className="flex h-28 w-28 shrink-0 items-center justify-center rounded-full bg-navy text-gold"
+            aria-label="Foto del contador pendiente"
+            role="img"
+          >
+            <ServiceIcon icon="contabilidad" className="h-12 w-12" />
+          </span>
+          <div>
+            <h3 className="font-serif text-2xl font-semibold text-navy">
+              <Placeholder>{site.contador.nombre}</Placeholder>
+            </h3>
+            <p className="mt-1 text-sm font-semibold uppercase tracking-wide text-gold">
+              Contador a cargo · <Placeholder>{site.contador.matricula}</Placeholder>
+            </p>
+            <p className="mt-3 text-navy/70">
+              <Placeholder>[completar foto propia y breve presentación del contador]</Placeholder>
+            </p>
+            <Link
+              href="/contable"
+              className="mt-3 inline-block text-sm font-semibold text-gold hover:text-navy"
+            >
+              Conocé el Departamento Contable →
+            </Link>
+          </div>
+        </div>
       </div>
 
       <div className="mt-12">

@@ -20,8 +20,10 @@ export default function Footer() {
           <ul className="space-y-2 text-sm text-cream/80">
             <li><Link href="/propiedades">Propiedades</Link></li>
             <li><Link href="/servicios">Servicios</Link></li>
+            <li><Link href="/contable">Departamento Contable</Link></li>
             <li><Link href="/nosotros">Nosotros</Link></li>
             <li><Link href="/recursos">Recursos</Link></li>
+            <li><Link href="/contacto">Contacto</Link></li>
           </ul>
         </div>
 
@@ -32,9 +34,12 @@ export default function Footer() {
           <ul className="space-y-2 text-sm text-cream/80">
             <li><Link href="/servicios/tasaciones">Tasaciones</Link></li>
             <li><Link href="/servicios/compraventa">Compraventa</Link></li>
-            <li><Link href="/servicios/administracion">Administración</Link></li>
+            <li><Link href="/servicios/alquileres">Alquileres</Link></li>
+            <li><Link href="/servicios/consorcios">Consorcios</Link></li>
+            <li><Link href="/servicios/fondos-de-comercio">Fondos de comercio</Link></li>
+            <li><Link href="/servicios/inversiones">Inversiones</Link></li>
+            <li><Link href="/servicios/sucesiones">Sucesiones</Link></li>
             <li><Link href="/servicios/captacion">Captación</Link></li>
-            <li><Link href="/servicios/fondos-de-comercio">Fondos de Comercio</Link></li>
           </ul>
         </div>
 
@@ -43,12 +48,26 @@ export default function Footer() {
             Contacto
           </p>
           <ul className="space-y-2 text-sm text-cream/80">
-            <li>{site.contact.phoneDisplay}</li>
+            <li>
+              <a
+                href={`https://wa.me/${site.contact.whatsappNumber}`}
+                target="_blank"
+                rel="noopener noreferrer"
+              >
+                WhatsApp {site.contact.phoneDisplay}
+              </a>
+            </li>
             <li>
               <a href={`mailto:${site.contact.email}`}>{site.contact.email}</a>
             </li>
+            <li>
+              <a href={site.social.instagram} target="_blank" rel="noopener noreferrer">
+                Instagram {site.social.instagramHandle}
+              </a>
+            </li>
             <li className="pt-2 text-xs text-cream/60">
-              {site.responsableTecnico.nombre} — {site.responsableTecnico.matricula}
+              {site.responsableTecnico.nombre} — {site.responsableTecnico.titulo},{" "}
+              {site.responsableTecnico.matricula}
             </li>
           </ul>
         </div>

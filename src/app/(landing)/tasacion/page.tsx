@@ -7,13 +7,13 @@ import { site, buildWhatsAppLink } from "@/lib/site";
 export const metadata: Metadata = {
   title: "Tasación de tu propiedad",
   description:
-    "Solicitá la tasación profesional de tu propiedad en Maipú y el Gran Mendoza, respaldada por la matrícula CCPIM.",
+    "Solicitá la tasación de tu propiedad en Maipú y el Gran Mendoza. Tasadores profesionales y matriculados, con más de 15 años de experiencia.",
 };
 
 const CONFIANZA = [
   {
-    titulo: "Matrícula CCPIM",
-    texto: `Respaldado por ${site.responsableTecnico.nombre}, ${site.responsableTecnico.matricula}.`,
+    titulo: "Tasadores matriculados",
+    texto: `Tasadores profesionales y matriculados, con más de 15 años de experiencia. Responsable: ${site.responsableTecnico.nombre}, ${site.responsableTecnico.matricula}.`,
   },
   {
     titulo: "Método profesional",
@@ -88,9 +88,9 @@ export default async function TasacionLandingPage({
             Conocé el valor real de tu propiedad
           </h1>
           <p className="mx-auto mt-5 max-w-xl text-base text-cream/80">
-            Un informe de tasación profesional, respaldado por la matrícula
-            CCPIM, para tomar decisiones con información real sobre tu
-            patrimonio.
+            Tasadores profesionales y matriculados, con más de 15 años de
+            experiencia: un informe fundamentado para tomar decisiones con
+            información real sobre tu patrimonio.
           </p>
 
           <div className="mt-10 flex flex-col items-center gap-3 sm:flex-row sm:justify-center">
