@@ -4,7 +4,8 @@ import { pageMetadata } from "@/lib/seo";
 import { site, buildWhatsAppLink } from "@/lib/site";
 
 // Página para el enlace de la bio de Instagram (fuera del menú, noindex).
-// Los enlaces internos llevan UTM para medir clics en GA4.
+// Los enlaces internos llevan UTM para medir clics en GA4. El padding
+// inferior evita que el botón flotante de WhatsApp tape el último botón.
 export const metadata: Metadata = pageMetadata({
   title: "MAIESTATE · Enlaces",
   path: "/enlaces",
@@ -33,7 +34,7 @@ const buttonClass =
 
 export default function EnlacesPage() {
   return (
-    <section className="mx-auto flex max-w-md flex-col items-center px-6 py-12">
+    <section className="mx-auto flex max-w-md flex-col items-center px-6 pt-12 pb-28">
       <span className="flex h-20 w-20 items-center justify-center rounded-full bg-navy font-serif text-3xl font-semibold text-gold">
         M
       </span>
