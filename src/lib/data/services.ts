@@ -130,8 +130,20 @@ export function getServiceBySlug(slug: string) {
   return services.find((s) => s.slug === slug);
 }
 
+/**
+ * Sucesiones queda en pausa hasta tener los textos finales (decisión del
+ * cliente). Con `false`: /servicios/sucesiones responde 404 y no aparece en
+ * la Home, /servicios, el footer ni el sitemap. Para activarla, completar
+ * los textos de src/app/(site)/servicios/sucesiones/page.tsx y pasar a `true`.
+ */
+export const SUCESIONES_ACTIVA = false;
+
 /** Rutas de servicio con página propia (no usan la plantilla [slug]). */
-export const DEDICATED_SERVICE_SLUGS = ["consorcios", "inversiones", "sucesiones"] as const;
+export const DEDICATED_SERVICE_SLUGS = [
+  "consorcios",
+  "inversiones",
+  ...(SUCESIONES_ACTIVA ? ["sucesiones"] : []),
+];
 
 /* ------------------------------------------------------------------ */
 /* Tarjetas de servicio (Home y /servicios) — brief v2 §5              */
@@ -145,7 +157,7 @@ export interface ServiceCardData {
   icono: IconName;
 }
 
-export const serviceCards: ServiceCardData[] = [
+const allServiceCards: ServiceCardData[] = [
   {
     titulo: "Tasaciones",
     texto:
@@ -225,6 +237,10 @@ export const serviceCards: ServiceCardData[] = [
     icono: "contabilidad",
   },
 ];
+
+export const serviceCards = allServiceCards.filter(
+  (c) => SUCESIONES_ACTIVA || c.href !== "/servicios/sucesiones"
+);
 
 /* ------------------------------------------------------------------ */
 /* Selector "¿En qué te podemos ayudar?" — brief v2 §12                */
