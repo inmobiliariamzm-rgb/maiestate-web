@@ -1,6 +1,8 @@
 import type { Metadata } from "next";
 import { pageMetadata } from "@/lib/seo";
 import Link from "next/link";
+import { notFound } from "next/navigation";
+import { SUCESIONES_ACTIVA } from "@/lib/data/services";
 import SectionHeading from "@/components/SectionHeading";
 import Placeholder from "@/components/Placeholder";
 import PageHero, { heroPrimaryButton } from "@/components/page/PageHero";
@@ -15,11 +17,15 @@ export const metadata: Metadata = pageMetadata({
   title: TITLE,
   description: DESCRIPTION,
   path: "/servicios/sucesiones",
+  noindex: !SUCESIONES_ACTIVA,
 });
 
 // Textos finales [completar — pendientes de redacción]: el brief solo fija
 // la estructura. No publicar a producción con los placeholders.
 export default function SucesionesPage() {
+  // En pausa hasta tener los textos finales (ver SUCESIONES_ACTIVA).
+  if (!SUCESIONES_ACTIVA) notFound();
+
   return (
     <>
       <PageHero

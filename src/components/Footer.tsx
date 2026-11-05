@@ -1,5 +1,6 @@
 import Link from "next/link";
 import { site } from "@/lib/site";
+import { SUCESIONES_ACTIVA } from "@/lib/data/services";
 
 export default function Footer() {
   return (
@@ -38,7 +39,9 @@ export default function Footer() {
             <li><Link href="/servicios/consorcios">Consorcios</Link></li>
             <li><Link href="/servicios/fondos-de-comercio">Fondos de comercio</Link></li>
             <li><Link href="/servicios/inversiones">Inversiones</Link></li>
-            <li><Link href="/servicios/sucesiones">Sucesiones</Link></li>
+            {SUCESIONES_ACTIVA && (
+              <li><Link href="/servicios/sucesiones">Sucesiones</Link></li>
+            )}
             <li><Link href="/servicios/captacion">Captación</Link></li>
           </ul>
         </div>
