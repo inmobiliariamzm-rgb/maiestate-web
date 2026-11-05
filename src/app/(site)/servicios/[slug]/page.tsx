@@ -3,6 +3,7 @@ import { notFound } from "next/navigation";
 import Link from "next/link";
 import { getServiceBySlug, services } from "@/lib/data/services";
 import ServiceIcon from "@/components/ServiceIcon";
+import AreaTag from "@/components/AreaTag";
 import TasacionForm from "@/components/forms/TasacionForm";
 import CaptacionForm from "@/components/forms/CaptacionForm";
 import ContactForm from "@/components/forms/ContactForm";
@@ -18,7 +19,11 @@ export async function generateMetadata({
   const { slug } = await params;
   const service = getServiceBySlug(slug);
   if (!service) return {};
-  return { title: service.titulo, description: service.resumen };
+  return {
+    title: service.titulo,
+    description: service.resumen,
+    alternates: { canonical: `/servicios/${service.slug}` },
+  };
 }
 
 export default async function ServiceDetailPage({
@@ -39,6 +44,7 @@ export default async function ServiceDetailPage({
           <ServiceIcon icon={service.icono} className="h-9 w-9" />
         </span>
         <div>
+          <AreaTag area={service.area} />
           <h1 className="font-serif text-3xl font-semibold text-navy sm:text-4xl">
             {service.titulo}
           </h1>
@@ -59,6 +65,24 @@ export default async function ServiceDetailPage({
               </li>
             ))}
           </ul>
+
+          {service.bloqueContable && (
+            <div className="mt-10 border-l-2 border-gold pl-6">
+              <p className="text-xs font-semibold uppercase tracking-[0.2em] text-gold">
+                Departamento Contable · {service.area}
+              </p>
+              <h2 className="mt-2 font-serif text-2xl font-semibold text-navy">
+                {service.bloqueContable.titulo}
+              </h2>
+              <p className="mt-2 text-navy/80">{service.bloqueContable.texto}</p>
+              <Link
+                href="/contable"
+                className="mt-3 inline-block text-sm font-semibold text-gold hover:text-navy"
+              >
+                Conocé el Departamento Contable →
+              </Link>
+            </div>
+          )}
 
           <div className="mt-10 rounded-sm border border-navy/10 bg-white p-6">
             <a
@@ -92,7 +116,7 @@ export default async function ServiceDetailPage({
             </>
           )}
           {service.slug !== "tasaciones" && service.slug !== "captacion" && (
-            <ContactForm title={service.cta} />
+            <ContactForm title={service.cta} motivo={service.motivo} />
           )}
         </aside>
       </div>

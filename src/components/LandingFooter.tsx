@@ -6,12 +6,14 @@ export default function LandingFooter() {
   return (
     <footer className="border-t border-navy/10 bg-navy py-8 text-center text-cream/70">
       <p className="font-serif text-lg font-semibold text-cream">{site.name}</p>
+      <p className="mt-1 text-xs uppercase tracking-[0.2em] text-gold">{site.tagline}</p>
       <p className="mt-1 text-sm">{site.address.full}</p>
       <p className="mt-1 text-sm">
-        {site.contact.phoneDisplay} · {site.contact.email}
+        WhatsApp {site.contact.phoneDisplay} · {site.contact.email}
       </p>
       <p className="mt-3 text-xs text-cream/50">
-        {site.responsableTecnico.nombre} — {site.responsableTecnico.matricula}
+        {site.responsableTecnico.nombre} — {site.responsableTecnico.titulo},{" "}
+        {site.responsableTecnico.matricula}
       </p>
       <p className="mt-4 text-xs text-cream/40">
         © {new Date().getFullYear()} {site.legalName}. Todos los derechos reservados.

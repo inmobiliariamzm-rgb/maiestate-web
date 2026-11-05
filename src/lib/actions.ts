@@ -1,6 +1,12 @@
 "use server";
 
-import { contactSchema, tasacionSchema, captacionSchema } from "@/lib/validation";
+import {
+  contactSchema,
+  tasacionSchema,
+  captacionSchema,
+  consorcioSchema,
+} from "@/lib/validation";
+import { areaForMotivo, labelForMotivo } from "@/lib/data/services";
 import { sendNotification } from "@/lib/mailer";
 import { saveLead } from "@/lib/leads";
 import type { FormState } from "@/lib/formState";
@@ -13,6 +19,7 @@ export async function submitContactForm(
     nombre: formData.get("nombre"),
     telefono: formData.get("telefono"),
     email: formData.get("email"),
+    motivo: formData.get("motivo"),
     mensaje: formData.get("mensaje"),
     propiedad: formData.get("propiedad") ?? "",
     origen: formData.get("origen") ?? "",
@@ -26,13 +33,21 @@ export async function submitContactForm(
     };
   }
 
+  // La etiqueta se deriva en el servidor a partir de la opción elegida
+  // (no se confía en un valor enviado por el navegador).
+  const area = areaForMotivo(parsed.data.motivo);
+  const motivo = labelForMotivo(parsed.data.motivo);
+
   await sendNotification({
-    subject: `Consulta de contacto — ${parsed.data.nombre}`,
-    data: parsed.data as unknown as Record<string, string>,
+    subject: `${motivo} — ${parsed.data.nombre}`,
+    etiqueta: area,
+    data: { ...parsed.data, motivo, area },
   });
 
   await saveLead({
     tipo: "contacto",
+    area,
+    motivo,
     nombre: parsed.data.nombre,
     telefono: parsed.data.telefono,
     email: parsed.data.email,
@@ -72,11 +87,13 @@ export async function submitTasacionForm(
 
   await sendNotification({
     subject: `Solicitud de tasación — ${parsed.data.direccion}`,
-    data: parsed.data as unknown as Record<string, string>,
+    etiqueta: "Inmobiliario",
+    data: { ...parsed.data, area: "Inmobiliario" },
   });
 
   await saveLead({
     tipo: "tasacion",
+    area: "Inmobiliario",
     nombre: parsed.data.nombre,
     telefono: parsed.data.telefono,
     email: parsed.data.email,
@@ -116,11 +133,13 @@ export async function submitCaptacionForm(
 
   await sendNotification({
     subject: `Nueva captación — ${parsed.data.direccion}`,
-    data: parsed.data as unknown as Record<string, string>,
+    etiqueta: "Inmobiliario",
+    data: { ...parsed.data, area: "Inmobiliario" },
   });
 
   await saveLead({
     tipo: "captacion",
+    area: "Inmobiliario",
     nombre: parsed.data.nombre,
     telefono: parsed.data.telefono,
     email: parsed.data.email,
@@ -133,5 +152,52 @@ export async function submitCaptacionForm(
   return {
     success: true,
     message: "¡Gracias! Recibimos los datos de tu propiedad, un asesor se va a contactar para coordinar la visita.",
+  };
+}
+
+export async function submitConsorcioForm(
+  _prevState: FormState,
+  formData: FormData
+): Promise<FormState> {
+  const parsed = consorcioSchema.safeParse({
+    consorcio: formData.get("consorcio"),
+    direccion: formData.get("direccion"),
+    unidades: formData.get("unidades"),
+    nombre: formData.get("nombre"),
+    telefono: formData.get("telefono"),
+    origen: formData.get("origen") ?? "",
+  });
+
+  if (!parsed.success) {
+    return {
+      success: false,
+      message: "Revisá los datos del formulario.",
+      errors: parsed.error.flatten().fieldErrors as Record<string, string[]>,
+    };
+  }
+
+  // Área preseleccionada: los consorcios son siempre "Conjunto".
+  const area = "Conjunto" as const;
+
+  await sendNotification({
+    subject: `Propuesta de consorcio — ${parsed.data.consorcio}`,
+    etiqueta: area,
+    data: { ...parsed.data, motivo: "Consorcios", area },
+  });
+
+  await saveLead({
+    tipo: "consorcio",
+    area,
+    motivo: "Consorcios",
+    nombre: parsed.data.nombre,
+    telefono: parsed.data.telefono,
+    direccion: parsed.data.direccion,
+    mensaje: `Consorcio: ${parsed.data.consorcio} · ${parsed.data.unidades} unidades`,
+    origen: parsed.data.origen,
+  });
+
+  return {
+    success: true,
+    message: "¡Gracias! Recibimos los datos del consorcio y te vamos a enviar una propuesta a la brevedad.",
   };
 }

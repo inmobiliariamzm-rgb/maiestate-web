@@ -1,4 +1,5 @@
 import { z } from "zod";
+import { MOTIVO_VALUES } from "@/lib/data/services";
 
 const nombre = z.string().trim().min(2, "Ingresá tu nombre completo.");
 const telefono = z.string().trim().min(6, "Ingresá un teléfono de contacto válido.");
@@ -13,6 +14,7 @@ export const contactSchema = z.object({
   nombre,
   telefono,
   email,
+  motivo: z.enum(MOTIVO_VALUES, "Elegí en qué te podemos ayudar."),
   mensaje: z.string().trim().min(10, "Contanos un poco más (mínimo 10 caracteres)."),
   propiedad: z.string().optional(),
   origen: z.string().trim().optional(),
@@ -40,6 +42,19 @@ export const captacionSchema = z.object({
   origen: z.string().trim().optional(),
 });
 
+export const consorcioSchema = z.object({
+  consorcio: z.string().trim().min(2, "Ingresá el nombre del consorcio."),
+  direccion: z.string().trim().min(5, "Ingresá la dirección del consorcio."),
+  unidades: z.coerce
+    .number("Indicá la cantidad de unidades.")
+    .int("Indicá un número entero.")
+    .min(1, "Indicá la cantidad de unidades."),
+  nombre,
+  telefono,
+  origen: z.string().trim().optional(),
+});
+
 export type ContactFormValues = z.infer<typeof contactSchema>;
 export type TasacionFormValues = z.infer<typeof tasacionSchema>;
 export type CaptacionFormValues = z.infer<typeof captacionSchema>;
+export type ConsorcioFormValues = z.infer<typeof consorcioSchema>;

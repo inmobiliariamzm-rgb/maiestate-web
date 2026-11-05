@@ -1,8 +1,12 @@
+import type { Metadata } from "next";
 import { Cormorant_Garamond, Montserrat } from "next/font/google";
 import LandingHeader from "@/components/LandingHeader";
 import LandingFooter from "@/components/LandingFooter";
 import WhatsAppButton from "@/components/WhatsAppButton";
+import { baseMetadata } from "@/lib/seo";
 import "../globals.css";
+
+export const metadata: Metadata = baseMetadata;
 
 const cormorant = Cormorant_Garamond({
   variable: "--font-cormorant",

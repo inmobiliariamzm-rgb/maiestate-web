@@ -17,7 +17,7 @@ export default function ContactoPage() {
       <SectionHeading
         eyebrow="Estamos para ayudarte"
         title="Contacto"
-        description="Escribinos por el formulario, WhatsApp o visitanos en nuestra oficina de Maipú."
+        description="Contanos en qué te podemos ayudar —inmobiliaria, Departamento Contable o ambos— y te responde quien corresponde."
       />
 
       <div className="mt-10 grid gap-12 lg:grid-cols-2">
@@ -40,15 +40,31 @@ export default function ContactoPage() {
           <div className="rounded-sm border border-navy/10 bg-white p-6">
             <h3 className="font-serif text-xl font-semibold text-navy">Oficina</h3>
             <p className="mt-2 text-navy/70">{site.address.full}</p>
-            <p className="mt-4 text-navy/70">{site.contact.phoneDisplay}</p>
+            <a
+              href={`https://wa.me/${site.contact.whatsappNumber}`}
+              target="_blank"
+              rel="noopener noreferrer"
+              className="mt-4 block text-navy/70 hover:text-gold"
+            >
+              WhatsApp {site.contact.phoneDisplay}
+            </a>
             <a
               href={`mailto:${site.contact.email}`}
               className="mt-1 block text-navy/70 hover:text-gold"
             >
               {site.contact.email}
             </a>
+            <a
+              href={site.social.instagram}
+              target="_blank"
+              rel="noopener noreferrer"
+              className="mt-1 block text-navy/70 hover:text-gold"
+            >
+              Instagram {site.social.instagramHandle}
+            </a>
             <p className="mt-4 text-xs text-navy/50">
-              {site.responsableTecnico.nombre} — {site.responsableTecnico.matricula}
+              {site.responsableTecnico.nombre} — {site.responsableTecnico.titulo},{" "}
+              {site.responsableTecnico.matricula}
             </p>
           </div>
 

@@ -6,9 +6,10 @@ import { site } from "@/lib/site";
 
 const NAV_LINKS = [
   { href: "/", label: "Inicio" },
-  { href: "/nosotros", label: "Nosotros" },
   { href: "/propiedades", label: "Propiedades" },
   { href: "/servicios", label: "Servicios" },
+  { href: "/contable", label: "Departamento Contable" },
+  { href: "/nosotros", label: "Nosotros" },
   { href: "/recursos", label: "Recursos" },
   { href: "/contacto", label: "Contacto" },
 ];
@@ -28,12 +29,12 @@ export default function Header() {
           </span>
         </Link>
 
-        <nav className="hidden gap-8 md:flex">
+        <nav className="hidden gap-6 lg:flex xl:gap-8">
           {NAV_LINKS.map((link) => (
             <Link
               key={link.href}
               href={link.href}
-              className="text-sm font-medium tracking-wide text-navy/80 transition-colors hover:text-gold"
+              className="whitespace-nowrap text-sm font-medium tracking-wide text-navy/80 transition-colors hover:text-gold"
             >
               {link.label}
             </Link>
@@ -42,8 +43,8 @@ export default function Header() {
 
         <button
           type="button"
-          className="flex h-10 w-10 flex-col items-center justify-center gap-1.5 md:hidden"
-          aria-label="Abrir menú"
+          className="flex h-10 w-10 flex-col items-center justify-center gap-1.5 lg:hidden"
+          aria-label={open ? "Cerrar menú" : "Abrir menú"}
           aria-expanded={open}
           onClick={() => setOpen((v) => !v)}
         >
@@ -54,7 +55,7 @@ export default function Header() {
       </div>
 
       {open && (
-        <nav className="flex flex-col border-t border-navy/10 bg-cream px-6 py-4 md:hidden">
+        <nav className="flex flex-col border-t border-navy/10 bg-cream px-6 py-4 lg:hidden">
           {NAV_LINKS.map((link) => (
             <Link
               key={link.href}

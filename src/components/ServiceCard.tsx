@@ -1,21 +1,25 @@
 import Link from "next/link";
-import type { Service } from "@/lib/data/services";
+import type { ServiceCardData } from "@/lib/data/services";
 import ServiceIcon from "@/components/ServiceIcon";
+import AreaTag from "@/components/AreaTag";
 
-export default function ServiceCard({ service }: { service: Service }) {
+export default function ServiceCard({ card }: { card: ServiceCardData }) {
   return (
     <Link
-      href={`/servicios/${service.slug}`}
-      className="group flex flex-col gap-4 rounded-sm border border-navy/10 bg-white p-6 transition-shadow hover:shadow-lg"
+      href={card.href}
+      className="group flex flex-col gap-3 rounded-sm border border-navy/10 bg-white p-6 transition-shadow hover:shadow-lg"
     >
-      <span className="flex h-14 w-14 items-center justify-center rounded-full bg-navy text-gold">
-        <ServiceIcon icon={service.icono} />
-      </span>
+      <div className="flex items-start justify-between gap-4">
+        <span className="flex h-14 w-14 items-center justify-center rounded-full bg-navy text-gold">
+          <ServiceIcon icon={card.icono} />
+        </span>
+        <AreaTag area={card.area} className="pt-1" />
+      </div>
       <h3 className="font-serif text-xl font-semibold text-navy">
-        {service.titulo}
+        {card.titulo}
       </h3>
-      <p className="text-sm text-navy/70">{service.resumen}</p>
-      <span className="mt-auto text-sm font-semibold text-gold transition-colors group-hover:text-navy">
+      <p className="line-clamp-2 text-sm text-navy/70">{card.texto}</p>
+      <span className="mt-auto pt-1 text-sm font-semibold text-gold transition-colors group-hover:text-navy">
         Conocer más →
       </span>
     </Link>

@@ -3,9 +3,9 @@ import Image from "next/image";
 import SectionHeading from "@/components/SectionHeading";
 import PropertySearchForm from "@/components/PropertySearchForm";
 import PropertyCard from "@/components/PropertyCard";
-import ServiceCard from "@/components/ServiceCard";
+import ServiceGrid from "@/components/ServiceGrid";
 import { getFeaturedProperties, getZonas, getTestimonios } from "@/lib/sanity/queries";
-import { services } from "@/lib/data/services";
+import { serviceCards } from "@/lib/data/services";
 import { site, buildWhatsAppLink } from "@/lib/site";
 
 const PILARES = [
@@ -18,12 +18,13 @@ const PILARES = [
     texto: `Tasaciones y operaciones respaldadas por ${site.responsableTecnico.nombre}, ${site.responsableTecnico.matricula}.`,
   },
   {
-    titulo: "Cobertura regional",
-    texto: "Operamos en Maipú, Luján de Cuyo, Guaymallén y el resto del Gran Mendoza.",
-  },
-  {
     titulo: "Atención personalizada",
     texto: "Un asesor dedicado te acompaña en cada etapa, sin intermediarios anónimos.",
+  },
+  {
+    titulo: "Respaldo contable propio",
+    texto:
+      "Cada operación sale con su lado impositivo resuelto. Nuestro Departamento Contable trabaja junto al área inmobiliaria, o por su cuenta cuando lo que necesitás es solo contable.",
   },
 ];
 
@@ -57,9 +58,10 @@ export default async function HomePage() {
             {site.tagline}
           </h1>
           <p className="mt-5 max-w-xl text-base text-cream/80">
-            Tasaciones, compraventa, administración de alquileres y fondos de
+            Tasaciones, compraventa, alquileres, consorcios y fondos de
             comercio en Maipú y el Gran Mendoza, con el respaldo de un
-            Corredor Público Inmobiliario matriculado.
+            Corredor Público Inmobiliario matriculado y un Departamento
+            Contable propio.
           </p>
 
           <div className="mt-10">
@@ -114,14 +116,49 @@ export default async function HomePage() {
       <section className="mx-auto max-w-6xl px-6 py-16">
         <SectionHeading
           eyebrow="Qué hacemos"
-          title="Nuestros servicios"
-          description="Un equipo especializado para cada etapa de tu operación inmobiliaria."
+          title="Todo tu patrimonio, en un solo lugar"
           align="center"
         />
-        <div className="mt-10 grid gap-6 sm:grid-cols-2 lg:grid-cols-3">
-          {services.map((service) => (
-            <ServiceCard key={service.slug} service={service} />
-          ))}
+        <div className="mt-8">
+          <ServiceGrid cards={serviceCards} />
+        </div>
+      </section>
+
+      <section className="border-y border-navy/10 bg-white py-16">
+        <div className="mx-auto grid max-w-6xl items-center gap-10 px-6 lg:grid-cols-5">
+          <div className="lg:col-span-2">
+            <p className="mb-2 text-xs font-semibold uppercase tracking-[0.25em] text-gold">
+              Departamento Contable
+            </p>
+            <h2 className="font-serif text-3xl font-semibold text-navy sm:text-4xl">
+              Tu patrimonio también necesita sus{" "}
+              <span className="text-gold">números en orden</span>
+            </h2>
+          </div>
+          <div className="grid gap-6 sm:grid-cols-2 lg:col-span-3">
+            <div className="border-l-2 border-gold pl-4">
+              <h3 className="font-serif text-xl font-semibold text-navy">Solo contable</h3>
+              <p className="mt-1 text-sm text-navy/70">
+                Monotributo, impuestos, sueldos o balances: el departamento te
+                atiende directamente.
+              </p>
+            </div>
+            <div className="border-l-2 border-gold pl-4">
+              <h3 className="font-serif text-xl font-semibold text-navy">
+                Junto al área inmobiliaria
+              </h3>
+              <p className="mt-1 text-sm text-navy/70">
+                Alquileres, ventas, sucesiones, consorcios o negocios, con un
+                solo referente para vos.
+              </p>
+            </div>
+            <Link
+              href="/contable"
+              className="w-fit rounded-sm bg-navy px-6 py-3 text-sm font-semibold uppercase tracking-wide text-cream hover:bg-navy-light sm:col-span-2"
+            >
+              Hablar con el contador
+            </Link>
+          </div>
         </div>
       </section>
 
@@ -142,9 +179,10 @@ export default async function HomePage() {
         </div>
       </section>
 
-      <section className="mx-auto max-w-6xl px-6 py-16">
+      {/* Solo testimonios reales: si no hay cargados, la sección no se muestra. */}
+      {testimonios.length > 0 && (
+        <section className="mx-auto max-w-6xl px-6 py-16">
         <SectionHeading eyebrow="Testimonios" title="Lo que dicen nuestros clientes" align="center" />
-        {testimonios.length > 0 ? (
           <div className="mt-10 grid gap-6 sm:grid-cols-3">
             {testimonios.map((t, i) => (
               <div
@@ -170,20 +208,8 @@ export default async function HomePage() {
               </div>
             ))}
           </div>
-        ) : (
-          <div className="mt-10 grid gap-6 sm:grid-cols-3">
-            {[1, 2, 3].map((i) => (
-              <div
-                key={i}
-                className="rounded-sm border border-dashed border-navy/20 bg-white p-6 text-center text-sm text-navy/50"
-              >
-                Testimonio a completar — se cargan desde el panel de
-                contenido (/studio).
-              </div>
-            ))}
-          </div>
-        )}
-      </section>
+        </section>
+      )}
 
       <section className="bg-gold/10 py-16">
         <div className="mx-auto flex max-w-4xl flex-col items-center gap-6 px-6 text-center">
