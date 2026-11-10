@@ -1,8 +1,22 @@
 import Link from "next/link";
 import { site } from "@/lib/site";
-import { SUCESIONES_ACTIVA } from "@/lib/data/services";
+import { getServiceCards } from "@/lib/sanity/contenido";
 
-export default function Footer() {
+const LINKS_SERVICIOS = [
+  { href: "/servicios/tasaciones", label: "Tasaciones" },
+  { href: "/servicios/compraventa", label: "Compraventa" },
+  { href: "/servicios/alquileres", label: "Alquileres" },
+  { href: "/servicios/consorcios", label: "Consorcios" },
+  { href: "/servicios/fondos-de-comercio", label: "Fondos de comercio" },
+  { href: "/servicios/inversiones", label: "Inversiones" },
+  { href: "/servicios/sucesiones", label: "Sucesiones" },
+  { href: "/servicios/captacion", label: "Captación" },
+];
+
+export default async function Footer() {
+  // Un servicio oculto desde el panel (o Sucesiones en pausa) sale del pie.
+  const visibles = new Set((await getServiceCards()).map((c) => c.href));
+
   return (
     <footer className="border-t border-navy/10 bg-navy text-cream">
       <div className="mx-auto grid max-w-6xl gap-10 px-6 py-14 sm:grid-cols-2 md:grid-cols-4">
@@ -33,16 +47,9 @@ export default function Footer() {
             Servicios
           </p>
           <ul className="space-y-2 text-sm text-cream/80">
-            <li><Link href="/servicios/tasaciones">Tasaciones</Link></li>
-            <li><Link href="/servicios/compraventa">Compraventa</Link></li>
-            <li><Link href="/servicios/alquileres">Alquileres</Link></li>
-            <li><Link href="/servicios/consorcios">Consorcios</Link></li>
-            <li><Link href="/servicios/fondos-de-comercio">Fondos de comercio</Link></li>
-            <li><Link href="/servicios/inversiones">Inversiones</Link></li>
-            {SUCESIONES_ACTIVA && (
-              <li><Link href="/servicios/sucesiones">Sucesiones</Link></li>
-            )}
-            <li><Link href="/servicios/captacion">Captación</Link></li>
+            {LINKS_SERVICIOS.filter((l) => visibles.has(l.href)).map((l) => (
+              <li key={l.href}><Link href={l.href}>{l.label}</Link></li>
+            ))}
           </ul>
         </div>
 
