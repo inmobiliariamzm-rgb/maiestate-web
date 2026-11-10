@@ -43,8 +43,7 @@ export default function NosotrosPage() {
           MAIESTATE nació en Maipú, Mendoza, con la convicción de que cada
           propiedad representa mucho más que un valor de mercado: representa
           el legado de una familia o el esfuerzo de toda una vida de trabajo.
-          [Contenido a completar por el cliente: historia real de fundación
-          de la inmobiliaria, hitos y trayectoria.]
+          {/* Pendiente: historia real de fundación, hitos y trayectoria. */}
         </p>
         <p>
           Desde tasaciones hasta la administración integral de alquileres,
@@ -63,8 +62,8 @@ export default function NosotrosPage() {
         <p className="mt-4 text-navy/70">
           Corredor Público Inmobiliario responsable de MAIESTATE,
           matriculado ante el CCPIM (Colegio de Corredores Públicos
-          Inmobiliarios de Mendoza). [Contenido a completar: trayectoria
-          profesional, formación y especialización de R. Alejandro Maidana.]
+          Inmobiliarios de Mendoza).
+          {/* Pendiente: trayectoria profesional, formación y especialización. */}
         </p>
       </div>
 
