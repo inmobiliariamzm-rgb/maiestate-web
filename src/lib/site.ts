@@ -23,8 +23,8 @@ export const site = {
     matricula: "CCPIM Mat. 1378",
   },
   social: {
-    instagramHandle: "@maiestate.mendoza",
-    instagram: "https://instagram.com/maiestate.mendoza",
+    instagramHandle: "@maiestate.mza",
+    instagram: "https://www.instagram.com/maiestate.mza/",
   },
 } as const;
 
