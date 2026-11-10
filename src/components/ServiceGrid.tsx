@@ -2,8 +2,9 @@ import ServiceCard from "@/components/ServiceCard";
 import { AREAS, type Area, type ServiceCardData } from "@/lib/data/services";
 
 const DESCRIPCION: Record<Area, string> = {
-  Inmobiliaria:
-    "Tasaciones, compraventa, alquileres, consorcios, fondos de comercio e inversiones.",
+  Inmobiliaria: "Tasaciones, compraventa, captación e inversiones.",
+  "Inmobiliaria-Contable":
+    "Administración de alquileres y consorcios, y fondos de comercio, con el respaldo del Departamento Contable.",
   Contable: "Impuestos, contabilidad y sueldos con nuestro Departamento Contable.",
   Jurídica: "Estamos preparando esta sección.",
 };

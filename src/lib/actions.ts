@@ -176,8 +176,8 @@ export async function submitConsorcioForm(
     };
   }
 
-  // Área preseleccionada: los consorcios van a la sección Inmobiliaria.
-  const area = "Inmobiliaria" as const;
+  // Área preseleccionada: los consorcios van a Inmobiliaria-Contable.
+  const area = "Inmobiliaria-Contable" as const;
 
   await sendNotification({
     subject: `Propuesta de consorcio — ${parsed.data.consorcio}`,

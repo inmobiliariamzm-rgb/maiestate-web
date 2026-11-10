@@ -24,7 +24,7 @@ export default function ConsorcioForm({ origen }: { origen?: string }) {
       <OrigenInput value={origen} />
 
       <p className="text-xs text-navy/60">
-        Área: <AreaTag area="Inmobiliaria" />
+        Área: <AreaTag area="Inmobiliaria-Contable" />
       </p>
 
       <div>

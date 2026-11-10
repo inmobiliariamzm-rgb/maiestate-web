@@ -1,7 +1,17 @@
-export type Area = "Inmobiliaria" | "Contable" | "Jurídica";
+export type Area =
+  | "Inmobiliaria"
+  | "Inmobiliaria-Contable"
+  | "Contable"
+  | "Jurídica";
 
-/** Secciones de servicios. Jurídica está en construcción (sin servicios aún). */
-export const AREAS: Area[] = ["Inmobiliaria", "Contable", "Jurídica"];
+/** Secciones de servicios. Inmobiliaria-Contable agrupa los servicios que
+ * combinan ambas áreas. Jurídica está en construcción (sin servicios aún). */
+export const AREAS: Area[] = [
+  "Inmobiliaria",
+  "Inmobiliaria-Contable",
+  "Contable",
+  "Jurídica",
+];
 
 export type IconName =
   | "tasacion"
@@ -70,7 +80,7 @@ export const services: Service[] = [
     titulo: "Administración de alquileres",
     resumen:
       "Gestión integral de tu propiedad alquilada: contratos, cobros, actualizaciones, atención a inquilinos e impuestos.",
-    area: "Inmobiliaria",
+    area: "Inmobiliaria-Contable",
     icono: "administracion",
     contenido: [
       "Redacción de contratos de locación conforme a la normativa vigente y actualizaciones periódicas según el índice pactado.",
@@ -105,7 +115,7 @@ export const services: Service[] = [
     titulo: "Fondos de comercio",
     resumen:
       "Valuamos tu negocio con números reales y lo vendemos con los papeles en orden, en Maipú y el Gran Mendoza.",
-    area: "Inmobiliaria",
+    area: "Inmobiliaria-Contable",
     icono: "fondo-comercio",
     contenido: [
       "Valuación del negocio y del valor llave, con análisis financiero e impositivo previo a la transferencia.",
@@ -174,7 +184,7 @@ const allServiceCards: ServiceCardData[] = [
     titulo: "Administración de alquileres",
     texto:
       "Cobramos, actualizamos y declaramos tu alquiler. Vos solo recibís la renta.",
-    area: "Inmobiliaria",
+    area: "Inmobiliaria-Contable",
     href: "/servicios/alquileres",
     icono: "administracion",
   },
@@ -182,7 +192,7 @@ const allServiceCards: ServiceCardData[] = [
     titulo: "Administración de consorcios",
     texto:
       "Expensas claras, fondos ordenados y rendiciones que todos entienden.",
-    area: "Inmobiliaria",
+    area: "Inmobiliaria-Contable",
     href: "/servicios/consorcios",
     icono: "consorcio",
   },
@@ -190,7 +200,7 @@ const allServiceCards: ServiceCardData[] = [
     titulo: "Fondos de comercio",
     texto:
       "Valuamos tu negocio con números reales y lo vendemos con los papeles en orden.",
-    area: "Inmobiliaria",
+    area: "Inmobiliaria-Contable",
     href: "/servicios/fondos-de-comercio",
     icono: "fondo-comercio",
   },
@@ -247,9 +257,9 @@ export const MOTIVOS = [
   { value: "compraventa", label: "Comprar o vender", area: "Inmobiliaria" },
   { value: "tasacion", label: "Tasación", area: "Inmobiliaria" },
   { value: "contable", label: "Impuestos y contabilidad", area: "Contable" },
-  { value: "alquileres", label: "Alquileres", area: "Inmobiliaria" },
-  { value: "consorcios", label: "Consorcios", area: "Inmobiliaria" },
-  { value: "fondo-comercio", label: "Fondo de comercio", area: "Inmobiliaria" },
+  { value: "alquileres", label: "Alquileres", area: "Inmobiliaria-Contable" },
+  { value: "consorcios", label: "Consorcios", area: "Inmobiliaria-Contable" },
+  { value: "fondo-comercio", label: "Fondo de comercio", area: "Inmobiliaria-Contable" },
   { value: "inversiones", label: "Inversiones", area: "Inmobiliaria" },
   { value: "sucesion", label: "Sucesión", area: "Inmobiliaria" },
 ] as const satisfies readonly { value: string; label: string; area: Area }[];

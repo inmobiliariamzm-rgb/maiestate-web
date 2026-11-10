@@ -40,6 +40,7 @@ export default defineType({
       options: {
         list: [
           { title: "Inmobiliaria", value: "Inmobiliaria" },
+          { title: "Inmobiliaria-Contable", value: "Inmobiliaria-Contable" },
           { title: "Contable", value: "Contable" },
           { title: "Jurídica", value: "Jurídica" },
         ],

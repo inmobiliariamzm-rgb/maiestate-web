@@ -15,7 +15,7 @@ export default function ServiciosPage() {
       <SectionHeading
         eyebrow="MAIESTATE"
         title="Todo tu patrimonio, en un solo lugar"
-        description="Nuestros servicios, organizados en tres áreas: Inmobiliaria, Contable y Jurídica."
+        description="Nuestros servicios, organizados por área: Inmobiliaria, Inmobiliaria-Contable, Contable y Jurídica."
       />
       <div className="mt-10">
         <ServiceGrid cards={serviceCards} />
