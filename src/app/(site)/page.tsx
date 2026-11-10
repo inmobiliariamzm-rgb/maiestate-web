@@ -5,35 +5,23 @@ import PropertySearchForm from "@/components/PropertySearchForm";
 import PropertyCard from "@/components/PropertyCard";
 import ServiceGrid from "@/components/ServiceGrid";
 import { getFeaturedProperties, getZonas, getTestimonios } from "@/lib/sanity/queries";
-import { serviceCards } from "@/lib/data/services";
-import { site, buildWhatsAppLink } from "@/lib/site";
-
-const PILARES = [
-  {
-    titulo: "12 años de trayectoria",
-    texto: "Conocimiento profundo del mercado inmobiliario de Maipú y Gran Mendoza.",
-  },
-  {
-    titulo: "Matrícula CCPIM",
-    texto: `Tasaciones y operaciones respaldadas por ${site.responsableTecnico.nombre}, ${site.responsableTecnico.matricula}.`,
-  },
-  {
-    titulo: "Atención personalizada",
-    texto: "Un asesor dedicado te acompaña en cada etapa, sin intermediarios anónimos.",
-  },
-  {
-    titulo: "Respaldo contable propio",
-    texto:
-      "Cada operación sale con su lado impositivo resuelto. Nuestro Departamento Contable trabaja junto al área inmobiliaria, o por su cuenta cuando lo que necesitás es solo contable.",
-  },
-];
+import {
+  getPaginaInicio,
+  getSeccionesServicios,
+  getServiceCards,
+} from "@/lib/sanity/contenido";
+import { buildWhatsAppLink } from "@/lib/site";
 
 export default async function HomePage() {
-  const [destacadas, zonas, testimonios] = await Promise.all([
-    getFeaturedProperties(),
-    getZonas(),
-    getTestimonios(),
-  ]);
+  const [destacadas, zonas, testimonios, inicio, cards, secciones] =
+    await Promise.all([
+      getFeaturedProperties(),
+      getZonas(),
+      getTestimonios(),
+      getPaginaInicio(),
+      getServiceCards(),
+      getSeccionesServicios(),
+    ]);
 
   return (
     <>
@@ -52,16 +40,13 @@ export default async function HomePage() {
 
         <div className="relative mx-auto max-w-6xl px-6 py-20 sm:py-28">
           <p className="mb-3 text-xs font-semibold uppercase tracking-[0.3em] text-gold">
-            Inmobiliaria boutique · Maipú, Mendoza
+            {inicio.heroEtiqueta}
           </p>
           <h1 className="max-w-2xl font-serif text-4xl font-semibold leading-tight sm:text-5xl">
-            {site.tagline}
+            {inicio.heroTitulo}
           </h1>
           <p className="mt-5 max-w-xl text-base text-cream/80">
-            Tasaciones, compraventa, alquileres, consorcios y fondos de
-            comercio en Maipú y el Gran Mendoza, con el respaldo de un
-            Corredor Público Inmobiliario matriculado y un Departamento
-            Contable propio.
+            {inicio.heroTexto}
           </p>
 
           <div className="mt-10">
@@ -72,7 +57,7 @@ export default async function HomePage() {
 
       <section className="mx-auto max-w-6xl px-6 py-16">
         <div className="grid gap-8 sm:grid-cols-2 lg:grid-cols-4">
-          {PILARES.map((p) => (
+          {inicio.pilares.map((p) => (
             <div key={p.titulo} className="border-l-2 border-gold pl-4">
               <h3 className="font-serif text-lg font-semibold text-navy">
                 {p.titulo}
@@ -115,12 +100,12 @@ export default async function HomePage() {
 
       <section className="mx-auto max-w-6xl px-6 py-16">
         <SectionHeading
-          eyebrow="Qué hacemos"
-          title="Todo tu patrimonio, en un solo lugar"
+          eyebrow={inicio.serviciosEtiqueta}
+          title={inicio.serviciosTitulo}
           align="center"
         />
         <div className="mt-8">
-          <ServiceGrid cards={serviceCards} />
+          <ServiceGrid cards={cards} areas={secciones.areas} />
         </div>
       </section>
 
@@ -128,35 +113,33 @@ export default async function HomePage() {
         <div className="mx-auto grid max-w-6xl items-center gap-10 px-6 lg:grid-cols-5">
           <div className="lg:col-span-2">
             <p className="mb-2 text-xs font-semibold uppercase tracking-[0.25em] text-gold">
-              Departamento Contable
+              {inicio.contableEtiqueta}
             </p>
             <h2 className="font-serif text-3xl font-semibold text-navy sm:text-4xl">
-              Tu patrimonio también necesita sus{" "}
-              <span className="text-gold">números en orden</span>
+              {inicio.contableTitulo}{" "}
+              <span className="text-gold">{inicio.contableTituloDestacado}</span>
             </h2>
           </div>
           <div className="grid gap-6 sm:grid-cols-2 lg:col-span-3">
             <div className="border-l-2 border-gold pl-4">
-              <h3 className="font-serif text-xl font-semibold text-navy">Solo contable</h3>
+              <h3 className="font-serif text-xl font-semibold text-navy">{inicio.contableSoloTitulo}</h3>
               <p className="mt-1 text-sm text-navy/70">
-                Monotributo, impuestos, sueldos o balances: el departamento te
-                atiende directamente.
+                {inicio.contableSoloTexto}
               </p>
             </div>
             <div className="border-l-2 border-gold pl-4">
               <h3 className="font-serif text-xl font-semibold text-navy">
-                Junto al área inmobiliaria
+                {inicio.contableJuntoTitulo}
               </h3>
               <p className="mt-1 text-sm text-navy/70">
-                Alquileres, ventas, sucesiones, consorcios o negocios, con un
-                solo referente para vos.
+                {inicio.contableJuntoTexto}
               </p>
             </div>
             <Link
               href="/contable"
               className="w-fit rounded-sm bg-navy px-6 py-3 text-sm font-semibold uppercase tracking-wide text-cream hover:bg-navy-light sm:col-span-2"
             >
-              Hablar con el contador
+              {inicio.contableBoton}
             </Link>
           </div>
         </div>
@@ -165,16 +148,12 @@ export default async function HomePage() {
       <section className="bg-navy py-16 text-cream">
         <div className="mx-auto max-w-4xl px-6 text-center">
           <SectionHeading
-            eyebrow="Por qué MAIESTATE"
-            title="Legado, trayectoria y compromiso"
+            eyebrow={inicio.porQueEtiqueta}
+            title={inicio.porQueTitulo}
             align="center"
           />
           <p className="mt-6 text-cream/80">
-            En MAIESTATE entendemos que cada propiedad representa un
-            patrimonio construido con esfuerzo. Por eso combinamos el rigor
-            técnico de la matrícula CCPIM con un enfoque cercano y
-            transparente, priorizando la sustentabilidad y el valor a largo
-            plazo de cada operación por sobre el volumen de ventas.
+            {inicio.porQueTexto}
           </p>
         </div>
       </section>
@@ -214,11 +193,10 @@ export default async function HomePage() {
       <section className="bg-gold/10 py-16">
         <div className="mx-auto flex max-w-4xl flex-col items-center gap-6 px-6 text-center">
           <h2 className="font-serif text-3xl font-semibold text-navy sm:text-4xl">
-            ¿Querés conocer el valor de tu propiedad?
+            {inicio.cierreTitulo}
           </h2>
           <p className="max-w-xl text-navy/70">
-            Solicitá una tasación profesional o hablá directamente con un
-            asesor de MAIESTATE.
+            {inicio.cierreTexto}
           </p>
           <div className="flex flex-col gap-3 sm:flex-row">
             <Link
