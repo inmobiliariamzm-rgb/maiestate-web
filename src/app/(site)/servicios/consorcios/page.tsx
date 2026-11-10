@@ -23,7 +23,7 @@ export default function ConsorciosPage() {
     <>
       <PageHero
         eyebrow="Administración de consorcios"
-        area="Conjunto"
+        area="Inmobiliaria"
         title={
           <>
             Un consorcio en orden, con{" "}

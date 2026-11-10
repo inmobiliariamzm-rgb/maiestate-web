@@ -7,13 +7,13 @@ import { site, buildWhatsAppLink } from "@/lib/site";
 export const metadata: Metadata = {
   title: "Tasación de tu propiedad",
   description:
-    "Solicitá la tasación de tu propiedad en Maipú y el Gran Mendoza. Tasadores profesionales y matriculados, con más de 15 años de experiencia.",
+    "Solicitá la tasación de tu propiedad en Maipú y el Gran Mendoza. Tasadores profesionales y matriculados, con 12 años de experiencia.",
 };
 
 const CONFIANZA = [
   {
     titulo: "Tasadores matriculados",
-    texto: `Tasadores profesionales y matriculados, con más de 15 años de experiencia. Responsable: ${site.responsableTecnico.nombre}, ${site.responsableTecnico.matricula}.`,
+    texto: `Tasadores profesionales y matriculados, con 12 años de experiencia. Responsable: ${site.responsableTecnico.nombre}, ${site.responsableTecnico.matricula}.`,
   },
   {
     titulo: "Método profesional",
@@ -88,7 +88,7 @@ export default async function TasacionLandingPage({
             Conocé el valor real de tu propiedad
           </h1>
           <p className="mx-auto mt-5 max-w-xl text-base text-cream/80">
-            Tasadores profesionales y matriculados, con más de 15 años de
+            Tasadores profesionales y matriculados, con 12 años de
             experiencia: un informe fundamentado para tomar decisiones con
             información real sobre tu patrimonio.
           </p>

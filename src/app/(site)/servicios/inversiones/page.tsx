@@ -46,7 +46,7 @@ export default function InversionesPage() {
     <>
       <PageHero
         eyebrow="Inversiones"
-        area="Conjunto"
+        area="Inmobiliaria"
         title={
           <>
             Invertí en ladrillos con los{" "}

@@ -3,7 +3,7 @@ import type { Area } from "@/lib/data/services";
 
 export interface LeadPayload {
   tipo: "contacto" | "tasacion" | "captacion" | "consorcio";
-  /** Etiqueta de área del brief v2: Inmobiliario | Contable | Conjunto. */
+  /** Etiqueta de área del brief v2: Inmobiliaria | Contable | Jurídica. */
   area?: Area;
   /** Opción elegida en "¿En qué te podemos ayudar?". */
   motivo?: string;

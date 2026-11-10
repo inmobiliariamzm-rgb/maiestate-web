@@ -10,7 +10,7 @@ import { site, buildWhatsAppLink } from "@/lib/site";
 
 const PILARES = [
   {
-    titulo: "30+ años de trayectoria",
+    titulo: "12 años de trayectoria",
     texto: "Conocimiento profundo del mercado inmobiliario de Maipú y Gran Mendoza.",
   },
   {

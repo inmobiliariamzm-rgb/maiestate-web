@@ -34,7 +34,7 @@ const buttonClass =
 
 export default function EnlacesPage() {
   return (
-    <section className="mx-auto flex max-w-md flex-col items-center px-6 pt-12 pb-28">
+    <section className="mx-auto flex max-w-md flex-col items-center px-6 pt-12 pb-44">
       <span className="flex h-20 w-20 items-center justify-center rounded-full bg-navy font-serif text-3xl font-semibold text-gold">
         M
       </span>
