@@ -30,7 +30,7 @@ export default function SucesionesPage() {
     <>
       <PageHero
         eyebrow="Sucesiones"
-        area="Conjunto"
+        area="Inmobiliaria"
         title={<Placeholder>[completar título — pendiente de redacción]</Placeholder>}
         description={<Placeholder>[completar bajada — pendiente de redacción]</Placeholder>}
       >

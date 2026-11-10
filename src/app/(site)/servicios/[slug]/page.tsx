@@ -69,7 +69,7 @@ export default async function ServiceDetailPage({
           {service.bloqueContable && (
             <div className="mt-10 border-l-2 border-gold pl-6">
               <p className="text-xs font-semibold uppercase tracking-[0.2em] text-gold">
-                Departamento Contable · {service.area}
+                Departamento Contable
               </p>
               <h2 className="mt-2 font-serif text-2xl font-semibold text-navy">
                 {service.bloqueContable.titulo}

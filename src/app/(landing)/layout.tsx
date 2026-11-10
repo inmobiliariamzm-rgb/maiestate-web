@@ -3,6 +3,7 @@ import { Cormorant_Garamond, Montserrat } from "next/font/google";
 import LandingHeader from "@/components/LandingHeader";
 import LandingFooter from "@/components/LandingFooter";
 import WhatsAppButton from "@/components/WhatsAppButton";
+import InstagramButton from "@/components/InstagramButton";
 import { baseMetadata } from "@/lib/seo";
 import "../globals.css";
 
@@ -38,6 +39,7 @@ export default function LandingLayout({
         <LandingHeader />
         <main className="flex-1">{children}</main>
         <LandingFooter />
+        <InstagramButton />
         <WhatsAppButton />
       </body>
     </html>

@@ -87,13 +87,13 @@ export async function submitTasacionForm(
 
   await sendNotification({
     subject: `Solicitud de tasación — ${parsed.data.direccion}`,
-    etiqueta: "Inmobiliario",
-    data: { ...parsed.data, area: "Inmobiliario" },
+    etiqueta: "Inmobiliaria",
+    data: { ...parsed.data, area: "Inmobiliaria" },
   });
 
   await saveLead({
     tipo: "tasacion",
-    area: "Inmobiliario",
+    area: "Inmobiliaria",
     nombre: parsed.data.nombre,
     telefono: parsed.data.telefono,
     email: parsed.data.email,
@@ -133,13 +133,13 @@ export async function submitCaptacionForm(
 
   await sendNotification({
     subject: `Nueva captación — ${parsed.data.direccion}`,
-    etiqueta: "Inmobiliario",
-    data: { ...parsed.data, area: "Inmobiliario" },
+    etiqueta: "Inmobiliaria",
+    data: { ...parsed.data, area: "Inmobiliaria" },
   });
 
   await saveLead({
     tipo: "captacion",
-    area: "Inmobiliario",
+    area: "Inmobiliaria",
     nombre: parsed.data.nombre,
     telefono: parsed.data.telefono,
     email: parsed.data.email,
@@ -176,8 +176,8 @@ export async function submitConsorcioForm(
     };
   }
 
-  // Área preseleccionada: los consorcios son siempre "Conjunto".
-  const area = "Conjunto" as const;
+  // Área preseleccionada: los consorcios van a la sección Inmobiliaria.
+  const area = "Inmobiliaria" as const;
 
   await sendNotification({
     subject: `Propuesta de consorcio — ${parsed.data.consorcio}`,

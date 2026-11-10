@@ -1,6 +1,7 @@
-export type Area = "Inmobiliario" | "Contable" | "Conjunto";
+export type Area = "Inmobiliaria" | "Contable" | "Jurídica";
 
-export const AREAS: Area[] = ["Inmobiliario", "Contable", "Conjunto"];
+/** Secciones de servicios. Jurídica está en construcción (sin servicios aún). */
+export const AREAS: Area[] = ["Inmobiliaria", "Contable", "Jurídica"];
 
 export type IconName =
   | "tasacion"
@@ -29,7 +30,7 @@ export interface Service {
   cta: string;
   /** Opción preseleccionada del selector de área en el formulario. */
   motivo?: MotivoValue;
-  /** Bloque extra del Departamento Contable para servicios "Conjunto". */
+  /** Bloque extra del Departamento Contable para servicios "Inmobiliaria". */
   bloqueContable?: { titulo: string; texto: string };
 }
 
@@ -39,7 +40,7 @@ export const services: Service[] = [
     titulo: "Tasaciones",
     resumen:
       "Tasadores profesionales y matriculados, con más de 15 años de experiencia, para conocer el valor real de tu propiedad.",
-    area: "Inmobiliario",
+    area: "Inmobiliaria",
     icono: "tasacion",
     contenido: [
       "Tasación realizada por tasadores profesionales y matriculados, con más de 15 años de experiencia, siguiendo los estándares del Tribunal de Tasaciones de la Nación.",
@@ -53,8 +54,8 @@ export const services: Service[] = [
     slug: "compraventa",
     titulo: "Compraventa",
     resumen:
-      "Acompañamiento integral en la compra o venta de tu propiedad, desde la oferta hasta la escritura, sabiendo de antemano el costo real de la operación.",
-    area: "Conjunto",
+      "Acompañamiento integral en la compra o venta de tu propiedad, desde la oferta hasta la escritura.",
+    area: "Inmobiliaria",
     icono: "compraventa",
     contenido: [
       "Búsqueda de propiedades según el perfil del comprador o de compradores calificados para tu propiedad.",
@@ -63,18 +64,13 @@ export const services: Service[] = [
     ],
     cta: "Quiero comprar o vender",
     motivo: "compraventa",
-    bloqueContable: {
-      titulo: "Costo real de la operación",
-      texto:
-        "Antes de firmar, el Departamento Contable calcula los impuestos y gastos de comprar o vender, para que decidas con todos los números a la vista.",
-    },
   },
   {
     slug: "alquileres",
     titulo: "Administración de alquileres",
     resumen:
       "Gestión integral de tu propiedad alquilada: contratos, cobros, actualizaciones, atención a inquilinos e impuestos.",
-    area: "Conjunto",
+    area: "Inmobiliaria",
     icono: "administracion",
     contenido: [
       "Redacción de contratos de locación conforme a la normativa vigente y actualizaciones periódicas según el índice pactado.",
@@ -94,7 +90,7 @@ export const services: Service[] = [
     titulo: "Captación de propiedades",
     resumen:
       "¿Querés vender o alquilar tu propiedad? Sumala a la cartera de MAIESTATE con exclusividad y visibilidad en los principales portales.",
-    area: "Inmobiliario",
+    area: "Inmobiliaria",
     icono: "captacion",
     contenido: [
       "Visita y relevamiento fotográfico profesional de tu propiedad.",
@@ -109,7 +105,7 @@ export const services: Service[] = [
     titulo: "Fondos de comercio",
     resumen:
       "Valuamos tu negocio con números reales y lo vendemos con los papeles en orden, en Maipú y el Gran Mendoza.",
-    area: "Conjunto",
+    area: "Inmobiliaria",
     icono: "fondo-comercio",
     contenido: [
       "Valuación del negocio y del valor llave, con análisis financiero e impositivo previo a la transferencia.",
@@ -162,14 +158,15 @@ const allServiceCards: ServiceCardData[] = [
     titulo: "Tasaciones",
     texto:
       "Un valor profesional y fundamentado, para vender, heredar o presentar ante bancos y juzgados.",
-    area: "Inmobiliario",
+    area: "Inmobiliaria",
     href: "/servicios/tasaciones",
     icono: "tasacion",
   },
   {
     titulo: "Compraventa",
-    texto: "Comprá o vendé sabiendo de antemano el costo real de la operación.",
-    area: "Conjunto",
+    texto:
+      "Te acompañamos en la compra o venta de tu propiedad, desde la oferta hasta la escritura.",
+    area: "Inmobiliaria",
     href: "/servicios/compraventa",
     icono: "compraventa",
   },
@@ -177,7 +174,7 @@ const allServiceCards: ServiceCardData[] = [
     titulo: "Administración de alquileres",
     texto:
       "Cobramos, actualizamos y declaramos tu alquiler. Vos solo recibís la renta.",
-    area: "Conjunto",
+    area: "Inmobiliaria",
     href: "/servicios/alquileres",
     icono: "administracion",
   },
@@ -185,7 +182,7 @@ const allServiceCards: ServiceCardData[] = [
     titulo: "Administración de consorcios",
     texto:
       "Expensas claras, fondos ordenados y rendiciones que todos entienden.",
-    area: "Conjunto",
+    area: "Inmobiliaria",
     href: "/servicios/consorcios",
     icono: "consorcio",
   },
@@ -193,7 +190,7 @@ const allServiceCards: ServiceCardData[] = [
     titulo: "Fondos de comercio",
     texto:
       "Valuamos tu negocio con números reales y lo vendemos con los papeles en orden.",
-    area: "Conjunto",
+    area: "Inmobiliaria",
     href: "/servicios/fondos-de-comercio",
     icono: "fondo-comercio",
   },
@@ -201,7 +198,7 @@ const allServiceCards: ServiceCardData[] = [
     titulo: "Inversiones",
     texto:
       "Te ayudamos a elegir dónde invertir y a saber cuánto rinde y cuánto tributa.",
-    area: "Conjunto",
+    area: "Inmobiliaria",
     href: "/servicios/inversiones",
     icono: "inversion",
   },
@@ -209,7 +206,7 @@ const allServiceCards: ServiceCardData[] = [
     titulo: "Sucesiones",
     texto:
       "Ordenamos la herencia y te ayudamos a decidir qué hacer con cada inmueble.",
-    area: "Conjunto",
+    area: "Inmobiliaria",
     href: "/servicios/sucesiones",
     icono: "sucesion",
   },
@@ -217,7 +214,7 @@ const allServiceCards: ServiceCardData[] = [
     titulo: "Captación",
     texto:
       "¿Querés vender o alquilar? Nos ocupamos de todo, desde la tasación hasta la firma.",
-    area: "Inmobiliario",
+    area: "Inmobiliaria",
     href: "/servicios/captacion",
     icono: "captacion",
   },
@@ -247,14 +244,14 @@ export const serviceCards = allServiceCards.filter(
 /* ------------------------------------------------------------------ */
 
 export const MOTIVOS = [
-  { value: "compraventa", label: "Comprar o vender", area: "Inmobiliario" },
-  { value: "tasacion", label: "Tasación", area: "Inmobiliario" },
+  { value: "compraventa", label: "Comprar o vender", area: "Inmobiliaria" },
+  { value: "tasacion", label: "Tasación", area: "Inmobiliaria" },
   { value: "contable", label: "Impuestos y contabilidad", area: "Contable" },
-  { value: "alquileres", label: "Alquileres", area: "Conjunto" },
-  { value: "consorcios", label: "Consorcios", area: "Conjunto" },
-  { value: "fondo-comercio", label: "Fondo de comercio", area: "Conjunto" },
-  { value: "inversiones", label: "Inversiones", area: "Conjunto" },
-  { value: "sucesion", label: "Sucesión", area: "Conjunto" },
+  { value: "alquileres", label: "Alquileres", area: "Inmobiliaria" },
+  { value: "consorcios", label: "Consorcios", area: "Inmobiliaria" },
+  { value: "fondo-comercio", label: "Fondo de comercio", area: "Inmobiliaria" },
+  { value: "inversiones", label: "Inversiones", area: "Inmobiliaria" },
+  { value: "sucesion", label: "Sucesión", area: "Inmobiliaria" },
 ] as const satisfies readonly { value: string; label: string; area: Area }[];
 
 export type MotivoValue = (typeof MOTIVOS)[number]["value"];
@@ -265,7 +262,7 @@ export const MOTIVO_VALUES = MOTIVOS.map((m) => m.value) as [
 ];
 
 export function areaForMotivo(motivo: MotivoValue): Area {
-  return MOTIVOS.find((m) => m.value === motivo)?.area ?? "Inmobiliario";
+  return MOTIVOS.find((m) => m.value === motivo)?.area ?? "Inmobiliaria";
 }
 
 export function labelForMotivo(motivo: MotivoValue): string {

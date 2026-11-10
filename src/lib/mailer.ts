@@ -7,13 +7,13 @@
 //
 // Make (Sheets/CRM): si la variable de entorno MAKE_WEBHOOK_URL está
 // configurada, cada envío se manda también como JSON a ese webhook, con la
-// etiqueta de área ("Inmobiliario" | "Contable" | "Conjunto") como campo
+// etiqueta de área ("Inmobiliaria" | "Contable" | "Jurídica") como campo
 // `etiqueta`, para que el escenario de Make la guarde/filtre.
 import type { Area } from "@/lib/data/services";
 
 export interface MailPayload {
   subject: string;
-  /** Etiqueta de área; se antepone al asunto como [Inmobiliario], etc. */
+  /** Etiqueta de área; se antepone al asunto como [Inmobiliaria], etc. */
   etiqueta?: Area;
   data: Record<string, string | number | undefined>;
 }
