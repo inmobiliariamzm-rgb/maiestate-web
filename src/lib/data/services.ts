@@ -39,11 +39,11 @@ export const services: Service[] = [
     slug: "tasaciones",
     titulo: "Tasaciones",
     resumen:
-      "Tasadores profesionales y matriculados, con 12 años de experiencia, para conocer el valor real de tu propiedad.",
+      "Tasadores profesionales y matriculados, con más de 15 años de experiencia, para conocer el valor real de tu propiedad.",
     area: "Inmobiliaria",
     icono: "tasacion",
     contenido: [
-      "Tasación realizada por tasadores profesionales y matriculados, con 12 años de experiencia, siguiendo los estándares del Tribunal de Tasaciones de la Nación.",
+      "Tasación realizada por tasadores profesionales y matriculados, con más de 15 años de experiencia, siguiendo los estándares del Tribunal de Tasaciones de la Nación.",
       "Relevamiento del inmueble, análisis de comparables de mercado en la zona y homogeneización de superficies.",
       "Informe escrito con fundamentos técnicos, útil para sucesiones, créditos hipotecarios, divisiones de condominio o toma de decisiones de venta.",
     ],
