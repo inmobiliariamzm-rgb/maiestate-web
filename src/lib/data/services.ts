@@ -25,6 +25,20 @@ export type IconName =
   | "impuestos"
   | "contabilidad";
 
+/** Nombres de los íconos, para elegirlos desde el panel de contenido. */
+export const ICONOS: { value: IconName; label: string }[] = [
+  { value: "tasacion", label: "Casa (tasación)" },
+  { value: "compraventa", label: "Canasta (compraventa)" },
+  { value: "administracion", label: "Casa con puerta (administración)" },
+  { value: "captacion", label: "Ubicación (captación)" },
+  { value: "fondo-comercio", label: "Local (fondo de comercio)" },
+  { value: "consorcio", label: "Edificio (consorcio)" },
+  { value: "inversion", label: "Gráfico (inversión)" },
+  { value: "sucesion", label: "Persona (sucesión)" },
+  { value: "impuestos", label: "Documento (impuestos)" },
+  { value: "contabilidad", label: "Planilla (contabilidad)" },
+];
+
 /**
  * Servicios con página propia bajo /servicios/[slug] (plantilla genérica).
  * Consorcios, inversiones y sucesiones tienen página dedicada en
@@ -156,6 +170,8 @@ export const DEDICATED_SERVICE_SLUGS = [
 /* ------------------------------------------------------------------ */
 
 export interface ServiceCardData {
+  /** Identificador fijo de la tarjeta (el documento en el panel es `servicio-<clave>`). */
+  clave: string;
   titulo: string;
   texto: string;
   area: Area;
@@ -163,8 +179,9 @@ export interface ServiceCardData {
   icono: IconName;
 }
 
-const allServiceCards: ServiceCardData[] = [
+export const allServiceCards: ServiceCardData[] = [
   {
+    clave: "tasaciones",
     titulo: "Tasaciones",
     texto:
       "Un valor profesional y fundamentado, para vender, heredar o presentar ante bancos y juzgados.",
@@ -173,6 +190,7 @@ const allServiceCards: ServiceCardData[] = [
     icono: "tasacion",
   },
   {
+    clave: "compraventa",
     titulo: "Compraventa",
     texto:
       "Te acompañamos en la compra o venta de tu propiedad, desde la oferta hasta la escritura.",
@@ -181,6 +199,7 @@ const allServiceCards: ServiceCardData[] = [
     icono: "compraventa",
   },
   {
+    clave: "alquileres",
     titulo: "Administración de alquileres",
     texto:
       "Cobramos, actualizamos y declaramos tu alquiler. Vos solo recibís la renta.",
@@ -189,6 +208,7 @@ const allServiceCards: ServiceCardData[] = [
     icono: "administracion",
   },
   {
+    clave: "consorcios",
     titulo: "Administración de consorcios",
     texto:
       "Expensas claras, fondos ordenados y rendiciones que todos entienden.",
@@ -197,6 +217,7 @@ const allServiceCards: ServiceCardData[] = [
     icono: "consorcio",
   },
   {
+    clave: "fondos-de-comercio",
     titulo: "Fondos de comercio",
     texto:
       "Valuamos tu negocio con números reales y lo vendemos con los papeles en orden.",
@@ -205,6 +226,7 @@ const allServiceCards: ServiceCardData[] = [
     icono: "fondo-comercio",
   },
   {
+    clave: "inversiones",
     titulo: "Inversiones",
     texto:
       "Te ayudamos a elegir dónde invertir y a saber cuánto rinde y cuánto tributa.",
@@ -213,6 +235,7 @@ const allServiceCards: ServiceCardData[] = [
     icono: "inversion",
   },
   {
+    clave: "sucesiones",
     titulo: "Sucesiones",
     texto:
       "Ordenamos la herencia y te ayudamos a decidir qué hacer con cada inmueble.",
@@ -221,6 +244,7 @@ const allServiceCards: ServiceCardData[] = [
     icono: "sucesion",
   },
   {
+    clave: "captacion",
     titulo: "Captación",
     texto:
       "¿Querés vender o alquilar? Nos ocupamos de todo, desde la tasación hasta la firma.",
@@ -229,6 +253,7 @@ const allServiceCards: ServiceCardData[] = [
     icono: "captacion",
   },
   {
+    clave: "impuestos",
     titulo: "Monotributo e impuestos",
     texto: "Tus impuestos al día, sin vencimientos que se te pasen.",
     area: "Contable",
@@ -236,6 +261,7 @@ const allServiceCards: ServiceCardData[] = [
     icono: "impuestos",
   },
   {
+    clave: "contabilidad",
     titulo: "Contabilidad y sueldos",
     texto:
       "Contabilidad, liquidación de sueldos y balances para tu pyme o comercio.",
@@ -277,4 +303,41 @@ export function areaForMotivo(motivo: MotivoValue): Area {
 
 export function labelForMotivo(motivo: MotivoValue): string {
   return MOTIVOS.find((m) => m.value === motivo)?.label ?? motivo;
+}
+
+/* ------------------------------------------------------------------ */
+/* Panel de contenido: valores actuales de cada servicio               */
+/* ------------------------------------------------------------------ */
+
+/** Prefijo del id de los documentos de servicio en el panel. */
+export const SERVICIO_ID_PREFIX = "servicio-";
+
+/** Claves de las tarjetas cuya página tiene diseño propio (no plantilla). */
+export function tienePaginaPropia(clave: string) {
+  return !services.some((s) => s.slug === clave);
+}
+
+/**
+ * Valores actuales de un servicio (tarjeta + página), en la forma del
+ * documento `servicio` del panel. Se usan como valor inicial del formulario.
+ */
+export function servicioPorDefecto(clave: string) {
+  const card = allServiceCards.find((c) => c.clave === clave);
+  const detalle = getServiceBySlug(clave);
+  if (!card) return {};
+  return {
+    titulo: card.titulo,
+    area: card.area,
+    icono: card.icono,
+    orden: (allServiceCards.indexOf(card) + 1) * 10,
+    textoTarjeta: card.texto,
+    visible: true,
+    ...(detalle && {
+      resumen: detalle.resumen,
+      contenido: detalle.contenido,
+      cta: detalle.cta,
+      motivo: detalle.motivo,
+      bloqueContable: detalle.bloqueContable,
+    }),
+  };
 }

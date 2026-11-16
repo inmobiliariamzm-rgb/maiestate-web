@@ -1,6 +1,7 @@
 import type { MetadataRoute } from "next";
 import { getPropertySlugs } from "@/lib/sanity/queries";
-import { services, DEDICATED_SERVICE_SLUGS } from "@/lib/data/services";
+import { DEDICATED_SERVICE_SLUGS } from "@/lib/data/services";
+import { getServicioSlugs } from "@/lib/sanity/contenido";
 import { site } from "@/lib/site";
 
 export default async function sitemap(): Promise<MetadataRoute.Sitemap> {
@@ -15,7 +16,7 @@ export default async function sitemap(): Promise<MetadataRoute.Sitemap> {
   ];
 
   // /enlaces queda fuera del sitemap a propósito (noindex).
-  const serviceSlugs = [...services.map((s) => s.slug), ...DEDICATED_SERVICE_SLUGS];
+  const serviceSlugs = [...(await getServicioSlugs()), ...DEDICATED_SERVICE_SLUGS];
   const serviceRoutes: MetadataRoute.Sitemap = serviceSlugs.map((slug) => ({
     url: `${site.url}/servicios/${slug}`,
     changeFrequency: "monthly",

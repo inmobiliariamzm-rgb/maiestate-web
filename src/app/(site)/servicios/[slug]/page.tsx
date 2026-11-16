@@ -1,13 +1,17 @@
 import type { Metadata } from "next";
 import { notFound } from "next/navigation";
 import Link from "next/link";
-import { getServiceBySlug, services } from "@/lib/data/services";
+import { services } from "@/lib/data/services";
+import { getServicioDetalle } from "@/lib/sanity/contenido";
 import ServiceIcon from "@/components/ServiceIcon";
 import AreaTag from "@/components/AreaTag";
 import TasacionForm from "@/components/forms/TasacionForm";
 import CaptacionForm from "@/components/forms/CaptacionForm";
 import ContactForm from "@/components/forms/ContactForm";
 import { buildWhatsAppLink } from "@/lib/site";
+
+// Los servicios nuevos creados en el panel se generan al primer pedido.
+export const dynamicParams = true;
 
 export function generateStaticParams() {
   return services.map((s) => ({ slug: s.slug }));
@@ -17,7 +21,7 @@ export async function generateMetadata({
   params,
 }: PageProps<"/servicios/[slug]">): Promise<Metadata> {
   const { slug } = await params;
-  const service = getServiceBySlug(slug);
+  const service = await getServicioDetalle(slug);
   if (!service) return {};
   return {
     title: service.titulo,
@@ -30,7 +34,7 @@ export default async function ServiceDetailPage({
   params,
 }: PageProps<"/servicios/[slug]">) {
   const { slug } = await params;
-  const service = getServiceBySlug(slug);
+  const service = await getServicioDetalle(slug);
   if (!service) notFound();
 
   return (
@@ -54,7 +58,9 @@ export default async function ServiceDetailPage({
 
       <div className="mt-12 grid gap-12 lg:grid-cols-3">
         <div className="lg:col-span-2">
-          <h2 className="font-serif text-2xl font-semibold text-navy">Cómo trabajamos</h2>
+          {service.contenido.length > 0 && (
+            <h2 className="font-serif text-2xl font-semibold text-navy">Cómo trabajamos</h2>
+          )}
           <ul className="mt-4 space-y-4">
             {service.contenido.map((texto, i) => (
               <li key={i} className="flex gap-3">
